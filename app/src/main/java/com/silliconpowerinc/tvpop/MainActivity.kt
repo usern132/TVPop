@@ -1,4 +1,4 @@
-`package com.silliconpowerinc.tvpop
+package com.silliconpowerinc.tvpop
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
