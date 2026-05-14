@@ -11,11 +11,20 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.silliconpowerinc.tvpop.di.sourcesModule
 import com.silliconpowerinc.tvpop.ui.theme.TVPopTheme
+import org.koin.android.ext.koin.androidContext
+import org.koin.core.context.startKoin
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        startKoin {
+            val modules = listOf(sourcesModule)
+
+            androidContext(this@MainActivity)
+            modules(modules)
+        }
         enableEdgeToEdge()
         setContent {
             TVPopTheme {

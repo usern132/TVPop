@@ -10,3 +10,4 @@
 local.properties
 *.pdf
 release.jks
+app/src/main/assets/env
