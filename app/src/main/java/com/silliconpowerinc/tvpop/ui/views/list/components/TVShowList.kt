@@ -1,8 +1,9 @@
 package com.silliconpowerinc.tvpop.ui.views.list.components
 
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.paging.PagingData
 import androidx.paging.compose.collectAsLazyPagingItems
@@ -24,13 +25,11 @@ fun TVShowList(
             val tvShow = lazyPagingItems[index]
             // item is loaded
             if (tvShow != null) {
-                TVShowListItem(tvShow)
+                TVShowListItem(modifier = Modifier.fillMaxWidth(), tvShow = tvShow)
             }
             // item is still loading
             else {
-                Text("Loading...")
-
-//                TVShowListItemPlaceholder()
+                TVShowListItemPlaceholder()
             }
         }
     }
@@ -40,4 +39,11 @@ fun TVShowList(
 @Preview(showBackground = true)
 private fun TVShowListPreview() {
     TVShowList(flowOf(PagingData.from(TVShow.examples)))
+}
+
+@Composable
+@Preview(showBackground = true, name = "Loading State")
+private fun TVShowListLoadingPreview() {
+    val loadingFlow = flowOf(PagingData.empty<TVShow>())
+    TVShowList(tvShowsFlow = loadingFlow)
 }

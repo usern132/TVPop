@@ -8,7 +8,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
 import com.silliconpowerinc.tvpop.ui.navigation.MainNavHost
 
@@ -29,10 +28,4 @@ fun MainScaffold() {
             navController = rememberNavController()
         )
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun MainScaffoldPreview() {
-    MainScaffold()
 }

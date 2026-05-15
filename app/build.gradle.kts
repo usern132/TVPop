@@ -78,6 +78,9 @@ dependencies {
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.dotenv.kotlin)
     implementation(libs.androidx.navigation.compose)
+    implementation(libs.coil.compose)
+    implementation(libs.coil3.coil.network.okhttp)
+    implementation(libs.androidx.compose.material.icons.extended)
 
     testImplementation(libs.junit)
 
