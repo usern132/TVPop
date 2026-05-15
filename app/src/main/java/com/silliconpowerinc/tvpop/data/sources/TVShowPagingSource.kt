@@ -5,6 +5,7 @@ import androidx.paging.PagingState
 import com.silliconpowerinc.tvpop.domain.models.TVShow
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import org.koin.java.KoinJavaComponent.inject
 
 @Serializable
 data class TMDBResponse(
@@ -21,13 +22,14 @@ data class TMDBResponse(
 private const val FIRST_PAGE = 1
 
 class TVShowPagingSource(
-    private val tmdbRemoteSource: TMDBRemoteSource
+    val language: String = "en-US"
 ) : PagingSource<Int, TVShow>() {
+    private val tmdbRemoteSource: TMDBRemoteSource by inject(TMDBRemoteSource::class.java)
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, TVShow> {
         return try {
             val currentPage = params.key ?: FIRST_PAGE
-            val response = tmdbRemoteSource.getTVShows(page = currentPage)
+            val response = tmdbRemoteSource.getTVShows(language = language, page = currentPage)
 
             LoadResult.Page(
                 data = response.results,

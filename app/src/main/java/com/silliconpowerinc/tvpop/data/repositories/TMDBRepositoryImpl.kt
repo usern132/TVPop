@@ -1,17 +1,31 @@
 package com.silliconpowerinc.tvpop.data.repositories
 
-import com.silliconpowerinc.tvpop.data.sources.TMDBRemoteSource
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import com.silliconpowerinc.tvpop.data.sources.TVShowPagingSource
+import com.silliconpowerinc.tvpop.domain.models.TVShow
 import com.silliconpowerinc.tvpop.domain.models.repositories.TMDBRepository
+import kotlinx.coroutines.flow.Flow
 
-class TMDBRepositoryImpl(
-    private val tmdbRemoteSource: TMDBRemoteSource
-) : TMDBRepository {
+class TMDBRepositoryImpl : TMDBRepository {
     /**
-     * Fetches the list of TV shows from TMDB ordered by popularity, from the `/3/tv/popular` endpoint.
+     * Provides a PagingData flow with the list of TV shows from TMDB ordered by popularity,
+     * fetched from the `/3/tv/popular` endpoint of the TMDB API using pagination.
      * @param language The language code to fetch the information in. Defaults to `en-US`.
-     * @param page The page number to fetch, starting at 1.
-     * @return The deserialized response from the API with the list of TV shows.
+     * @return Flow of PagingData with the list of TV shows returned by the API.
      */
-    override suspend fun getTVShows(language: String, page: Int) =
-        tmdbRemoteSource.getTVShows(language, page).results
+    override fun getTVShowsFlow(language: String): Flow<PagingData<TVShow>> =
+        Pager(
+            config = PagingConfig(
+                // Defined by TMDB's API
+                pageSize = 20,
+                // Items that are still loading will be null
+                enablePlaceholders = true
+            ),
+            pagingSourceFactory = {
+                TVShowPagingSource(language = language)
+            }
+        )
+            .flow
 }
