@@ -5,9 +5,11 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.silliconpowerinc.tvpop.data.sources.TVShowPagingSource
 import com.silliconpowerinc.tvpop.domain.models.TVShow
-import com.silliconpowerinc.tvpop.domain.models.repositories.TMDBRepository
+import com.silliconpowerinc.tvpop.domain.repositories.TMDBRepository
 import kotlinx.coroutines.flow.Flow
+import org.koin.core.annotation.Singleton
 
+@Singleton
 class TMDBRepositoryImpl : TMDBRepository {
     /**
      * Provides a PagingData flow with the list of TV shows from TMDB ordered by popularity,

@@ -1,4 +1,4 @@
-package com.silliconpowerinc.tvpop.domain.models.repositories
+package com.silliconpowerinc.tvpop.domain.repositories
 
 import androidx.paging.PagingData
 import com.silliconpowerinc.tvpop.domain.models.TVShow

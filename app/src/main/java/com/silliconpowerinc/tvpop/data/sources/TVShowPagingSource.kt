@@ -30,9 +30,10 @@ class TVShowPagingSource(
         return try {
             val currentPage = params.key ?: FIRST_PAGE
             val response = tmdbRemoteSource.getTVShows(language = language, page = currentPage)
+            val results = response.results.distinctBy { tvShow -> tvShow.id }
 
             LoadResult.Page(
-                data = response.results,
+                data = results,
                 prevKey = if (currentPage == FIRST_PAGE) null else currentPage - FIRST_PAGE,
                 nextKey = if (currentPage < response.totalPages) currentPage + FIRST_PAGE else null
             )

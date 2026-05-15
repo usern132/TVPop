@@ -12,11 +12,13 @@ import io.ktor.client.plugins.logging.Logging
 import io.ktor.client.request.get
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
+import org.koin.core.annotation.Singleton
 
 
 private const val BASE_URL = "https://api.themoviedb.org/3"
 private const val TIMEOUT_MS: Long = 15000
 
+@Singleton
 class TMDBRemoteSource {
 
     val client = HttpClient(OkHttp) {
@@ -56,7 +58,7 @@ class TMDBRemoteSource {
      * @return The deserialized response from the API, containing the list of TV shows and pagination information.
      */
     suspend fun getTVShows(language: String = "en-US", page: Int): TMDBResponse {
-        return client.get { "$BASE_URL/tv/popular?language=${language}&page=${page}" }
+        return client.get("$BASE_URL/tv/popular?language=${language}&page=${page}")
             .body()
     }
 }
