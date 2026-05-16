@@ -3,6 +3,7 @@ package com.silliconpowerinc.tvpop.ui.views.list.components
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -33,18 +34,6 @@ fun TVShowList(
     tvShowsFlow: Flow<PagingData<TVShow>>
 ) {
     val lazyPagingItems = tvShowsFlow.collectAsLazyPagingItems()
-    Box(
-        contentAlignment = Alignment.Center,
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(16.dp)
-    ) {
-        when (val state = lazyPagingItems.loadState.refresh) {
-            is LoadState.Loading -> CircularProgressIndicator()
-            is LoadState.Error -> ErrorScreen(state, lazyPagingItems)
-            else -> {}
-        }
-    }
     LazyColumn {
         items(
             lazyPagingItems.itemCount,
@@ -58,6 +47,21 @@ fun TVShowList(
             else TVShowListItemPlaceholder()
         }
     }
+
+    // Overlay shown with states other than loaded
+    Box(
+        contentAlignment = Alignment.Center,
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp)
+    ) {
+        when (val state = lazyPagingItems.loadState.refresh) {
+            is LoadState.Loading -> CircularProgressIndicator()
+            is LoadState.Error -> ErrorScreen(state, lazyPagingItems)
+            else -> {}
+        }
+    }
+
 }
 
 @Composable
