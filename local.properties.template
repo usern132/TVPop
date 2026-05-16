@@ -1,0 +1,2 @@
+# Añade esto al final del fichero local.properties de tu proyecto y rellena ahí los valores
+TMDB_API_KEY=

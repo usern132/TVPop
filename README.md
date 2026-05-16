@@ -9,8 +9,7 @@ TMDB.
 ## Compilación
 
 Antes de compilar el proyecto, es necesario especificar tu clave de la API de TMDB para poder
-autenticar las peticiones. Para eso, deberás rellenar su valor en un fichero `env` a partir de la
-plantilla proporcionada, [`env.template`](app/src/main/assets/env.template), siguiendo estos pasos:
-
-1. Haz una copia de [`env.template`](app/src/main/assets/env.template) en un fichero llamado `env`, en la misma [carpeta](app/src/main/assets).
-2. Especifica el valor de tu clave de la API de TMDB.
+autenticar las peticiones. Rellena su valor en el fichero `local.properties` (generado por Android
+Studio en la raíz del proyecto) a partir de la plantilla proporcionada, [
+`local.properties.template`](local.properties.template). Copia el contenido de la plantilla al final
+de `local.properties` y rellena el valor de la clave.
