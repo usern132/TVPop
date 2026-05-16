@@ -47,7 +47,7 @@ data class TVShow(
                 overview = "This is an example TV show used for testing and previews.",
                 popularity = 123.45,
                 posterPath = "/mBcu8d6x6zB1el3MPNl7cZQEQ31.jpg",
-                voteAverage = 8.5,
+                voteAverage = 8.534,
                 voteCount = 1000
             ),
             TVShow(
@@ -62,7 +62,7 @@ data class TVShow(
                 overview = "This is another example TV show used for testing and previews.",
                 popularity = 98.76,
                 posterPath = "/mHZSq8LA5Dt48JjaOZ5tcPXQRVN.jpg",
-                voteAverage = 7.8,
+                voteAverage = 7.832,
                 voteCount = 500
             ),
             TVShow(
@@ -77,7 +77,7 @@ data class TVShow(
                 overview = "This is a sample TV show used for testing and previews.",
                 popularity = 75.32,
                 posterPath = "/eyTu5c8LniVciRZIOSHTvvkkgJa.jpg",
-                voteAverage = 6.9,
+                voteAverage = 6.921,
                 voteCount = 250
             ),
             TVShow(
@@ -92,7 +92,7 @@ data class TVShow(
                 overview = "This is a test TV show used for testing and previews.",
                 popularity = 50.12,
                 posterPath = "/haJ9eHytVO3H3JooMJG1DiWwDNm.jpg",
-                voteAverage = 5.5,
+                voteAverage = 5.521,
                 voteCount = 150
             ),
             TVShow(
@@ -107,7 +107,7 @@ data class TVShow(
                 overview = "This is a demo TV show used for testing and previews.",
                 popularity = 25.67,
                 posterPath = "/3Cz7ySOQJmqiuTdrc6CY0r65yDI.jpg",
-                voteAverage = 4.3,
+                voteAverage = 4.343,
                 voteCount = 75
             )
         )
