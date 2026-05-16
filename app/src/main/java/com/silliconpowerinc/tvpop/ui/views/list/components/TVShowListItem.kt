@@ -28,6 +28,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil3.compose.SubcomposeAsyncImage
+import com.silliconpowerinc.tvpop.common.toFlagEmoji
+import com.silliconpowerinc.tvpop.common.toLocalizedCountryName
 import com.silliconpowerinc.tvpop.domain.models.TVShow
 import com.silliconpowerinc.tvpop.ui.theme.Typography
 
@@ -54,7 +56,8 @@ fun TVShowListItem(
             ) {
                 val separator = "•"
                 val details = listOf(
-                    tvShow.originCountry,
+                    tvShow.originCountry[0].toFlagEmoji() + " " +
+                            tvShow.originCountry[0].toLocalizedCountryName(),
                     tvShow.firstAirDate
                 )
                 Text(
@@ -72,6 +75,8 @@ fun TVShowListItem(
                 )
                 Text(
                     text = details.joinToString(separator = " $separator "),
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
                     style = Typography.bodyMedium
                 )
             }
