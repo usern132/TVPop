@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">TVPop</string>
+    <string name="error_occurred">An error has occurred: %s</string>
+    <string name="retry">Retry</string>
 </resources>

@@ -12,7 +12,7 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun TVShowListItemPlaceholder(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier.fillMaxWidth()
 ) {
     Box(modifier = modifier) {
         CircularProgressIndicator(
@@ -26,5 +26,5 @@ fun TVShowListItemPlaceholder(
 @Composable
 @Preview(showBackground = true)
 private fun TVShowListItemPlaceholderPreview() {
-    TVShowListItemPlaceholder(modifier = Modifier.fillMaxWidth())
+    TVShowListItemPlaceholder()
 }
