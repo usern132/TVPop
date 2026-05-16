@@ -24,6 +24,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil3.compose.SubcomposeAsyncImage
@@ -46,7 +47,7 @@ fun TVShowListItem(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
                 .fillMaxSize()
-                .padding(16.dp)
+                .padding(horizontal = 16.dp, vertical = 8.dp)
         ) {
             Column(
                 verticalArrangement = Arrangement.Center
@@ -58,6 +59,8 @@ fun TVShowListItem(
                 )
                 Text(
                     text = tvShow.name,
+                    maxLines = 2,
+                    overflow = TextOverflow.Ellipsis,
                     style = Typography.titleLarge.copy(
                         // The shadow keeps the text legible when the background image is the same color as the text.
                         shadow = Shadow(
@@ -124,7 +127,13 @@ private fun BackgroundGradient() {
 
 
 @Composable
-@Preview(showBackground = true)
+@Preview(showBackground = true, backgroundColor = android.graphics.Color.MAGENTA.toLong())
 private fun TVShowListItemPreview() {
     TVShowListItem(tvShow = TVShow.examples[0])
+}
+
+@Composable
+@Preview(showBackground = true, backgroundColor = android.graphics.Color.BLACK.toLong())
+private fun TVShowListItemLongPreview() {
+    TVShowListItem(tvShow = TVShow.examples[0].copy(name = "This is a very long TV show name for testing purposes - very long!"))
 }
