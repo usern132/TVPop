@@ -1,21 +1,25 @@
 package com.silliconpowerinc.tvpop.ui.views.list
 
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.tooling.preview.Preview
 import com.silliconpowerinc.tvpop.ui.viewmodels.TVShowsViewModel
-import com.silliconpowerinc.tvpop.ui.views.list.components.TVShowList
+import com.silliconpowerinc.tvpop.ui.views.list.components.TVShowListEvent
+import com.silliconpowerinc.tvpop.ui.views.list.components.TVShowListItemEvent
+import com.silliconpowerinc.tvpop.ui.views.list.components.TVShowsList
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun ListScreen(
-    tvShowsViewModel: TVShowsViewModel = koinViewModel()
+    tvShowsViewModel: TVShowsViewModel = koinViewModel(),
+    onNavigate: (TVShowListEvent) -> Unit
 ) {
     val tvShowsFlow = tvShowsViewModel.tvShowsFlow
-    TVShowList(tvShowsFlow = tvShowsFlow)
-}
-
-@Composable
-@Preview(showBackground = true)
-private fun ListScreenPreview() {
-    ListScreen()
+    TVShowsList(
+        tvShowsFlow = tvShowsFlow,
+        onEvent = { event ->
+            when (event) {
+                is TVShowListItemEvent.Click -> onNavigate(event)
+                else -> tvShowsViewModel.onEvent(event = event)
+            }
+        }
+    )
 }

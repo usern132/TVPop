@@ -31,9 +31,12 @@ import com.silliconpowerinc.tvpop.domain.models.TVShow
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 
+sealed class TVShowListEvent
+
 @Composable
-fun TVShowList(
-    tvShowsFlow: Flow<PagingData<TVShow>>
+fun TVShowsList(
+    tvShowsFlow: Flow<PagingData<TVShow>>,
+    onEvent: (event: TVShowListEvent) -> Unit
 ) {
     val lazyPagingItems = tvShowsFlow.collectAsLazyPagingItems()
     LazyColumn {
@@ -44,7 +47,11 @@ fun TVShowList(
             val tvShow = lazyPagingItems[index]
             // item is loaded
             if (tvShow != null)
-                TVShowListItem(modifier = Modifier.fillMaxWidth(), tvShow = tvShow)
+                TVShowListItem(
+                    modifier = Modifier.fillMaxWidth(),
+                    tvShow = tvShow,
+                    onEvent = onEvent
+                )
             // item is still loading
             else TVShowListItemPlaceholder()
         }
@@ -92,20 +99,26 @@ private fun ErrorScreen(
 
 @Composable
 @Preview(showBackground = true)
-private fun TVShowListPreview() {
-    TVShowList(flowOf(PagingData.from(TVShow.examples)))
+private fun TVShowsListPreview() {
+    TVShowsList(
+        tvShowsFlow = flowOf(PagingData.from(TVShow.examples)),
+        onEvent = {}
+    )
 }
 
 @Composable
 @Preview(showBackground = true)
-private fun TVShowListLoadingPreview() {
+private fun TVShowsListLoadingPreview() {
     val loadingFlow = flowOf(PagingData.empty<TVShow>())
-    TVShowList(tvShowsFlow = loadingFlow)
+    TVShowsList(
+        tvShowsFlow = loadingFlow,
+        onEvent = {}
+    )
 }
 
 @Composable
 @Preview(showBackground = true)
-private fun TVShowListErrorPreview() {
+private fun TVShowsListErrorPreview() {
     val errorFlow = flowOf(
         PagingData.from(
             data = emptyList<TVShow>(),
@@ -116,5 +129,8 @@ private fun TVShowListErrorPreview() {
             )
         )
     )
-    TVShowList(tvShowsFlow = errorFlow)
+    TVShowsList(
+        tvShowsFlow = errorFlow,
+        onEvent = {}
+    )
 }

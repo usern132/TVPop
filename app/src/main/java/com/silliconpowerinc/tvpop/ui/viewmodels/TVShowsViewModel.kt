@@ -7,6 +7,7 @@ import androidx.paging.cachedIn
 import androidx.paging.filter
 import com.silliconpowerinc.tvpop.domain.models.TVShow
 import com.silliconpowerinc.tvpop.domain.repositories.TMDBRepository
+import com.silliconpowerinc.tvpop.ui.views.list.components.TVShowListEvent
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import org.koin.core.annotation.KoinViewModel
@@ -15,6 +16,8 @@ import org.koin.core.annotation.KoinViewModel
 class TVShowsViewModel(
     private val tmdbRepository: TMDBRepository
 ) : ViewModel() {
+    fun onEvent(event: TVShowListEvent) {}
+
     val tvShowsFlow: Flow<PagingData<TVShow>> =
         tmdbRepository.getTVShowsFlow()
             .map { pagingData ->
@@ -30,4 +33,6 @@ class TVShowsViewModel(
                 }
             }
             .cachedIn(viewModelScope)
+
+    fun getTVShow(id: Int): TVShow? = tmdbRepository.getTVShow(id)
 }

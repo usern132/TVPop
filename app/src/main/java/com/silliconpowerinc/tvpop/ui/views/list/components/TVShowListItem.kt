@@ -1,6 +1,7 @@
 package com.silliconpowerinc.tvpop.ui.views.list.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -37,12 +38,17 @@ import com.silliconpowerinc.tvpop.common.toLocalizedCountryName
 import com.silliconpowerinc.tvpop.domain.models.TVShow
 import com.silliconpowerinc.tvpop.ui.theme.AppTypography
 
+sealed class TVShowListItemEvent : TVShowListEvent() {
+    data class Click(val id: Int) : TVShowListItemEvent()
+}
+
 private const val LEFT_WEIGHT = 0.85f
 
 @Composable
 fun TVShowListItem(
     modifier: Modifier = Modifier,
-    tvShow: TVShow
+    tvShow: TVShow,
+    onEvent: (event: TVShowListItemEvent) -> Unit
 ) {
     val textShadow = Shadow(
         color = MaterialTheme.colorScheme.surface,
@@ -53,6 +59,7 @@ fun TVShowListItem(
     Box(
         modifier = modifier
             .height(100.dp)
+            .clickable(enabled = true, onClick = { onEvent(TVShowListItemEvent.Click(tvShow.id)) })
     ) {
         BackgroundImage(tvShow)
         BackgroundGradient()
@@ -211,11 +218,14 @@ annotation class TVShowListItemBackgroundColorAnnotations
 @Composable
 @TVShowListItemBackgroundColorAnnotations
 private fun TVShowListItemPreview() {
-    TVShowListItem(tvShow = TVShow.examples[0])
+    TVShowListItem(tvShow = TVShow.examples[0], onEvent = {})
 }
 
 @Composable
 @TVShowListItemBackgroundColorAnnotations
 private fun TVShowListItemLongPreview() {
-    TVShowListItem(tvShow = TVShow.examples[0].copy(name = "This is a very long TV show name for testing purposes - very long!"))
+    TVShowListItem(
+        tvShow = TVShow.examples[0].copy(name = "This is a very long TV show name for testing purposes - very long!"),
+        onEvent = {}
+    )
 }

@@ -3,14 +3,18 @@ package com.silliconpowerinc.tvpop.data.repositories
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
+import androidx.paging.map
 import com.silliconpowerinc.tvpop.data.sources.TVShowPagingSource
 import com.silliconpowerinc.tvpop.domain.models.TVShow
 import com.silliconpowerinc.tvpop.domain.repositories.TMDBRepository
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import org.koin.core.annotation.Singleton
 
 @Singleton
 class TMDBRepositoryImpl : TMDBRepository {
+    private val cachedShows = mutableMapOf<Int, TVShow>()
+
     /**
      * Provides a PagingData flow with the list of TV shows from TMDB ordered by popularity,
      * fetched from the `/3/tv/popular` endpoint of the TMDB API using pagination.
@@ -28,6 +32,19 @@ class TMDBRepositoryImpl : TMDBRepository {
             pagingSourceFactory = {
                 TVShowPagingSource(language = language)
             }
-        )
-            .flow
+        ).flow.map { pagingData ->
+            pagingData.map { tvShow ->
+                cachedShows[tvShow.id] = tvShow
+                return@map tvShow
+            }
+        }
+
+    /** Returns a TV show cached from the API's response and stored in a Collection.
+     * This function should only be called after the paged data has been retrieved by
+     * the UI layer; else, the requested show will be missing.
+     *
+     * @param id - the TV show's ID
+     * @return The TV show with the specified ID, if it has been previously retrieved from the API.
+     */
+    override fun getTVShow(id: Int): TVShow? = cachedShows[id]
 }
