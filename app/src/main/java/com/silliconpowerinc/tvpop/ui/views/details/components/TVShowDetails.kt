@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -14,6 +15,8 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.silliconpowerinc.tvpop.R
@@ -33,23 +36,41 @@ fun TVShowDetails(
     val textShadow = MaterialTheme.textShadow
     Column {
         Box(
-            modifier = Modifier.weight(BACKDROP_WEIGHT),
+            modifier = Modifier
+                .weight(BACKDROP_WEIGHT)
+                .fillMaxWidth(),
             contentAlignment = Alignment.BottomStart
         ) {
             MyAsyncImage(
                 model = tvShow.backdropUrl,
                 contentDescription = stringResource(R.string.movie_backdrop),
-                contentScale = ContentScale.Crop
+                contentScale = ContentScale.Crop,
+                modifier = Modifier.fillMaxWidth()
             )
             BackgroundGradient()
-            Text(
-                tvShow.name,
-                style = AppTypography.headlineMedium.copy(
-                    color = MaterialTheme.colorScheme.primary,
-                    shadow = textShadow
-                ),
+            Column(
                 modifier = Modifier.padding(BORDER_PADDING_DP.dp)
-            )
+            ) {
+                Text(
+                    text = tvShow.name,
+                    style = AppTypography.headlineLarge.copy(
+                        color = MaterialTheme.colorScheme.primary,
+                        shadow = textShadow
+                    ),
+                    maxLines = 3,
+                    overflow = TextOverflow.Ellipsis
+                )
+                Text(
+                    text = tvShow.originalName,
+                    style = AppTypography.titleMedium.copy(
+                        color = MaterialTheme.colorScheme.primary,
+                        fontStyle = FontStyle.Italic,
+                        shadow = textShadow
+                    ),
+                    maxLines = 2,
+                    overflow = TextOverflow.Ellipsis
+                )
+            }
         }
         Box(
             modifier = Modifier.weight(1 - BACKDROP_WEIGHT)
