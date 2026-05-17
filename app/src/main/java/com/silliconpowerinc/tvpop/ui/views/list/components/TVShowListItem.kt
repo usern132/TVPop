@@ -21,7 +21,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shadow
@@ -36,6 +35,7 @@ import com.silliconpowerinc.tvpop.common.toLocalizedCountryNameWithEmoji
 import com.silliconpowerinc.tvpop.domain.models.TVShow
 import com.silliconpowerinc.tvpop.ui.common.MyAsyncImage
 import com.silliconpowerinc.tvpop.ui.theme.AppTypography
+import com.silliconpowerinc.tvpop.ui.theme.textShadow
 
 sealed class TVShowListItemEvent : TVShowListEvent() {
     data class Click(val id: Int) : TVShowListItemEvent()
@@ -49,12 +49,7 @@ fun TVShowListItem(
     tvShow: TVShow,
     onEvent: (event: TVShowListItemEvent) -> Unit
 ) {
-    val textShadow = Shadow(
-        color = MaterialTheme.colorScheme.surface,
-        offset = Offset(4.0f, 4.0f),
-        blurRadius = 24f
-    )
-
+    val textShadow = MaterialTheme.textShadow
     Box(
         modifier = modifier
             .height(100.dp)

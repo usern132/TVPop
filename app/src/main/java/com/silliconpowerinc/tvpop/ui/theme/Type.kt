@@ -1,6 +1,11 @@
 package com.silliconpowerinc.tvpop.ui.theme
 
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Typography
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.ReadOnlyComposable
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.googlefonts.Font
 import androidx.compose.ui.text.googlefonts.GoogleFont
@@ -48,4 +53,13 @@ val AppTypography = Typography(
     labelMedium = baseline.labelMedium.copy(fontFamily = bodyFontFamily),
     labelSmall = baseline.labelSmall.copy(fontFamily = bodyFontFamily),
 )
+
+val MaterialTheme.textShadow: Shadow
+    @Composable
+    @ReadOnlyComposable
+    get() = Shadow(
+        color = MaterialTheme.colorScheme.surface,
+        offset = Offset(4.0f, 4.0f),
+        blurRadius = 24f
+    )
 
