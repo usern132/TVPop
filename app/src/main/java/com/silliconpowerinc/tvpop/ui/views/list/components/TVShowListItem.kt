@@ -14,9 +14,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Error
 import androidx.compose.material.icons.filled.Star
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -28,14 +26,16 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import coil3.compose.SubcomposeAsyncImage
+import com.silliconpowerinc.tvpop.R
 import com.silliconpowerinc.tvpop.common.toFlagEmoji
 import com.silliconpowerinc.tvpop.common.toLocalizedCountryName
 import com.silliconpowerinc.tvpop.domain.models.TVShow
+import com.silliconpowerinc.tvpop.ui.common.MyAsyncImage
 import com.silliconpowerinc.tvpop.ui.theme.AppTypography
 
 sealed class TVShowListItemEvent : TVShowListEvent() {
@@ -160,31 +160,13 @@ private fun Title(tvShow: TVShow, textShadow: Shadow) {
 
 @Composable
 private fun BackgroundImage(tvShow: TVShow) {
-    SubcomposeAsyncImage(
+    MyAsyncImage(
         model = tvShow.backdropUrl,
-        contentScale = ContentScale.Crop,
         modifier = Modifier
             .fillMaxWidth()
             .height(100.dp),
-        loading = {
-            Box(
-                modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center
-            ) {
-                CircularProgressIndicator(
-                    modifier = Modifier.size(48.dp)
-                )
-            }
-        },
-        error = {
-            Box(
-                modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center
-            ) {
-                Icon(Icons.Default.Error, contentDescription = null)
-            }
-        },
-        contentDescription = null,
+        contentScale = ContentScale.Crop,
+        contentDescription = stringResource(R.string.movie_backdrop),
     )
 }
 
