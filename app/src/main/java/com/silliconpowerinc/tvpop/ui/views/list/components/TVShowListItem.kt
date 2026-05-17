@@ -35,7 +35,7 @@ import coil3.compose.SubcomposeAsyncImage
 import com.silliconpowerinc.tvpop.common.toFlagEmoji
 import com.silliconpowerinc.tvpop.common.toLocalizedCountryName
 import com.silliconpowerinc.tvpop.domain.models.TVShow
-import com.silliconpowerinc.tvpop.ui.theme.Typography
+import com.silliconpowerinc.tvpop.ui.theme.AppTypography
 
 private const val LEFT_WEIGHT = 0.85f
 
@@ -90,7 +90,7 @@ private fun RatingCount(
 ) {
     Text(
         text = "(${tvShow.voteCount})",
-        style = Typography.bodySmall.copy(
+        style = AppTypography.bodySmall.copy(
             fontStyle = FontStyle.Italic,
             shadow = textShadow
         )
@@ -113,7 +113,7 @@ private fun RatingStarRow(
         Spacer(modifier = Modifier.width(4.dp))
         Text(
             text = "%.2f".format(tvShow.voteAverage),
-            style = Typography.bodyMedium.copy(
+            style = AppTypography.bodyMedium.copy(
                 shadow = textShadow
             )
         )
@@ -132,7 +132,7 @@ private fun Subtitle(tvShow: TVShow, textShadow: Shadow) {
         text = details.joinToString(separator = " $separator "),
         maxLines = 1,
         overflow = TextOverflow.Ellipsis,
-        style = Typography.bodyMedium.copy(
+        style = AppTypography.bodyMedium.copy(
             shadow = textShadow
         )
     )
@@ -144,7 +144,7 @@ private fun Title(tvShow: TVShow, textShadow: Shadow) {
         text = tvShow.name,
         maxLines = 2,
         overflow = TextOverflow.Ellipsis,
-        style = Typography.titleLarge.copy(
+        style = AppTypography.titleLarge.copy(
             // The shadow keeps the text legible when the background image is the same color as the text.
             shadow = textShadow
         )

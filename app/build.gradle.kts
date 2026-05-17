@@ -82,6 +82,7 @@ dependencies {
     implementation(libs.coil.compose)
     implementation(libs.coil3.coil.network.okhttp)
     implementation(libs.androidx.compose.material.icons.extended)
+    implementation(libs.androidx.compose.ui.text.google.fonts)
 
     testImplementation(libs.junit)
 

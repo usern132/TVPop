@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
 import com.silliconpowerinc.tvpop.ui.navigation.MainNavHost
+import com.silliconpowerinc.tvpop.ui.theme.AppTypography
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -17,7 +18,12 @@ fun MainScaffold() {
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("TVPop") }
+                title = {
+                    Text(
+                        text = "TVPop",
+                        style = AppTypography.headlineMedium
+                    )
+                }
             )
         }
     ) { paddingValues ->

@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Refresh
@@ -20,6 +21,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
+import androidx.paging.LoadStates
 import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
@@ -56,7 +58,7 @@ fun TVShowList(
             .padding(16.dp)
     ) {
         when (val state = lazyPagingItems.loadState.refresh) {
-            is LoadState.Loading -> CircularProgressIndicator()
+            is LoadState.Loading -> CircularProgressIndicator(modifier = Modifier.size(32.dp))
             is LoadState.Error -> ErrorScreen(state, lazyPagingItems)
             else -> {}
         }
@@ -95,8 +97,24 @@ private fun TVShowListPreview() {
 }
 
 @Composable
-@Preview(showBackground = true, name = "Loading State")
+@Preview(showBackground = true)
 private fun TVShowListLoadingPreview() {
     val loadingFlow = flowOf(PagingData.empty<TVShow>())
     TVShowList(tvShowsFlow = loadingFlow)
+}
+
+@Composable
+@Preview(showBackground = true)
+private fun TVShowListErrorPreview() {
+    val errorFlow = flowOf(
+        PagingData.from(
+            data = emptyList<TVShow>(),
+            sourceLoadStates = LoadStates(
+                refresh = LoadState.Error(Exception("Network error")),
+                prepend = LoadState.NotLoading(endOfPaginationReached = false),
+                append = LoadState.NotLoading(endOfPaginationReached = false)
+            )
+        )
+    )
+    TVShowList(tvShowsFlow = errorFlow)
 }

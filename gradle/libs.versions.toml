@@ -23,8 +23,10 @@ navigationCompose = "2.9.8"
 pagingCommon = "3.5.0"
 pagingCompose = "3.5.0"
 secretsGradlePlugin = "2.0.1"
+uiTextGoogleFonts = "1.11.1"
 
 [libraries]
+androidx-compose-ui-text-google-fonts = { module = "androidx.compose.ui:ui-text-google-fonts", version.ref = "uiTextGoogleFonts" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
 androidx-paging-common = { module = "androidx.paging:paging-common", version.ref = "pagingCommon" }
