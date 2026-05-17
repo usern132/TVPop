@@ -32,8 +32,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.silliconpowerinc.tvpop.R
-import com.silliconpowerinc.tvpop.common.toFlagEmoji
-import com.silliconpowerinc.tvpop.common.toLocalizedCountryName
+import com.silliconpowerinc.tvpop.common.toLocalizedCountryNameWithEmoji
 import com.silliconpowerinc.tvpop.domain.models.TVShow
 import com.silliconpowerinc.tvpop.ui.common.MyAsyncImage
 import com.silliconpowerinc.tvpop.ui.theme.AppTypography
@@ -131,8 +130,7 @@ private fun RatingStarRow(
 private fun Subtitle(tvShow: TVShow, textShadow: Shadow) {
     val separator = "•"
     val details = listOf(
-        tvShow.originCountry[0].toFlagEmoji() + " " +
-                tvShow.originCountry[0].toLocalizedCountryName(),
+        tvShow.originCountry[0].toLocalizedCountryNameWithEmoji(),
         tvShow.firstAirDate
     )
     Text(

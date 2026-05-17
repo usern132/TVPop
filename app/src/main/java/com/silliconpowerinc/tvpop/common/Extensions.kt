@@ -10,7 +10,7 @@ import java.util.Locale
  */
 fun String.toLocalizedCountryName(): String {
     val countryCode = this
-    val locale = Locale.Builder().setRegion(this).build()
+    val locale = Locale.Builder().setRegion(countryCode).build()
     return locale.displayCountry
 }
 
@@ -27,4 +27,9 @@ fun String.toFlagEmoji(): String {
         val offset = char - 'A'
         Character.toChars(offset + FIRST_REGIONAL_INDICATOR_SYMBOL).concatToString()
     }.joinToString("")
+}
+
+fun String.toLocalizedCountryNameWithEmoji(): String {
+    val countryCode = this
+    return countryCode.toFlagEmoji() + " " + countryCode.toLocalizedCountryName()
 }
