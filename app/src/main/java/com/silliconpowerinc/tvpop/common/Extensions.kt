@@ -33,3 +33,14 @@ fun String.toLocalizedCountryNameWithEmoji(): String {
     val countryCode = this
     return countryCode.toFlagEmoji() + " " + countryCode.toLocalizedCountryName()
 }
+
+/**
+ * Converts a language code to its localized language name based on the device's current locale settings.
+ * @receiver The country code to be converted (e.g., "en", "es").
+ * @return The localized language name corresponding to the provided language code (e.g., "English", "Spanish").
+ */
+fun String.toLocalizedLanguageName(): String {
+    val languageCode = this
+    val locale = Locale.Builder().setLanguage(languageCode).build()
+    return locale.displayLanguage.replaceFirstChar { it.uppercase() }
+}

@@ -36,6 +36,7 @@ import com.silliconpowerinc.tvpop.domain.models.TVShow
 import com.silliconpowerinc.tvpop.ui.common.MyAsyncImage
 import com.silliconpowerinc.tvpop.ui.theme.AppTypography
 import com.silliconpowerinc.tvpop.ui.theme.textShadow
+import java.text.DateFormat
 
 sealed class TVShowListItemEvent : TVShowListEvent() {
     data class Click(val id: Int) : TVShowListItemEvent()
@@ -126,7 +127,8 @@ private fun Subtitle(tvShow: TVShow, textShadow: Shadow) {
     val separator = "•"
     val details = listOf(
         tvShow.originCountry[0].toLocalizedCountryNameWithEmoji(),
-        tvShow.firstAirDate
+        DateFormat.getDateInstance(DateFormat.SHORT)
+            .format(tvShow.firstAirDateObject)
     )
     Text(
         text = details.joinToString(separator = " $separator "),

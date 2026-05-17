@@ -3,4 +3,8 @@
     <string name="error_occurred">An error has occurred: %s</string>
     <string name="retry">Retry</string>
     <string name="movie_backdrop">Movie backdrop</string>
+    <string name="origin_country_ies">Origin country/ies</string>
+    <string name="origin_language">Origin language</string>
+    <string name="overview">Overview</string>
+    <string name="first_air_date">First air date</string>
 </resources>

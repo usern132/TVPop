@@ -2,6 +2,8 @@ package com.silliconpowerinc.tvpop.domain.models
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import java.text.SimpleDateFormat
+import java.util.Date
 
 private const val IMAGE_WIDTH = "w1280"
 private const val IMAGES_BASE_URL = "https://image.tmdb.org/t/p/$IMAGE_WIDTH"
@@ -33,6 +35,14 @@ data class TVShow(
 ) {
     val backdropUrl: String
         get() = "$IMAGES_BASE_URL$relativeBackdropPath"
+
+    val firstAirDateObject: Date
+        get() {
+            val formatFromAPI = SimpleDateFormat("yyyy-MM-dd")
+            val date = formatFromAPI.parse(this.firstAirDate)
+            return date ?: throw IllegalArgumentException("firstAirDate could not be parsed into a Date object")
+        }
+
     companion object {
         val examples: List<TVShow> = listOf(
             TVShow(
