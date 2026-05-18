@@ -105,14 +105,14 @@ private fun RatingStarRow(
     textShadow: Shadow
 ) {
     Row(
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(4.dp)
     ) {
         Icon(
             imageVector = Icons.Default.Star,
             contentDescription = null,
             modifier = Modifier.size(20.dp)
         )
-        Spacer(modifier = Modifier.width(4.dp))
         Text(
             text = "%.2f".format(tvShow.voteAverage),
             style = AppTypography.bodyMedium.copy(

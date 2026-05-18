@@ -7,4 +7,6 @@
     <string name="origin_language">Origin language</string>
     <string name="overview">Overview</string>
     <string name="first_air_date">First air date</string>
+    <string name="rating">Rating</string>
+    <string name="votes">%1$d votes</string>
 </resources>
