@@ -62,7 +62,7 @@ fun TitleAndDescriptionDetailCard(
         Text(
             // Allow the text inside the card to be scrolled if it doesn't fit
             modifier = Modifier.verticalScroll(rememberScrollState()),
-            text = description,
+            text = description.ifEmpty { stringResource(R.string.not_available) },
         )
     }
 }
