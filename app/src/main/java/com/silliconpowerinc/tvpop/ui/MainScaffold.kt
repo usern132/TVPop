@@ -23,9 +23,12 @@ fun MainScaffold() {
                     Text(
                         text = "TVPop",
                         style = AppTypography.headlineMedium,
-                        color = MaterialTheme.colorScheme.primary
                     )
-                }
+                },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.5f),
+                    titleContentColor = MaterialTheme.colorScheme.primary
+                )
             )
         }
     ) { paddingValues ->

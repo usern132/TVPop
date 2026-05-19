@@ -95,7 +95,7 @@ private fun RatingCount(
         style = AppTypography.bodySmall.copy(
             fontStyle = FontStyle.Italic,
             shadow = textShadow
-        )
+        ),
     )
 }
 
@@ -111,13 +111,15 @@ private fun RatingStarRow(
         Icon(
             imageVector = Icons.Default.Star,
             contentDescription = null,
-            modifier = Modifier.size(20.dp)
+            modifier = Modifier.size(20.dp),
+            tint = MaterialTheme.colorScheme.primary
         )
         Text(
             text = "%.2f".format(tvShow.voteAverage),
             style = AppTypography.bodyMedium.copy(
                 shadow = textShadow
-            )
+            ),
+            color = MaterialTheme.colorScheme.primary
         )
     }
 }
@@ -136,7 +138,7 @@ private fun Subtitle(tvShow: TVShow, textShadow: Shadow) {
         overflow = TextOverflow.Ellipsis,
         style = AppTypography.bodyMedium.copy(
             shadow = textShadow
-        )
+        ),
     )
 }
 
@@ -149,7 +151,8 @@ private fun Title(tvShow: TVShow, textShadow: Shadow) {
         style = AppTypography.titleLarge.copy(
             // The shadow keeps the text legible when the background image is the same color as the text.
             shadow = textShadow
-        )
+        ),
+        color = MaterialTheme.colorScheme.primary
     )
 }
 
