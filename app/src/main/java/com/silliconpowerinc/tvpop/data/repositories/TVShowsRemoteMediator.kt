@@ -8,15 +8,17 @@ import androidx.room.withTransaction
 import com.silliconpowerinc.tvpop.data.sources.TMDBRemoteSource
 import com.silliconpowerinc.tvpop.data.sources.TVShowRemoteKeys
 import com.silliconpowerinc.tvpop.data.sources.TVShowsLocalSource
+import com.silliconpowerinc.tvpop.data.utils.ConnectivityObserver
 import com.silliconpowerinc.tvpop.domain.models.TVShow
 
-private const val CACHE_TIMEOUT_MINUTES = 5
+private const val CACHE_TIMEOUT_MINUTES = 15
 private const val CACHE_TIMEOUT_MS = CACHE_TIMEOUT_MINUTES * 60 * 1000
 
 @OptIn(ExperimentalPagingApi::class)
 class TVShowsRemoteMediator(
     private val tvShowsLocalSource: TVShowsLocalSource,
-    private val tmdbRemoteSource: TMDBRemoteSource
+    private val tmdbRemoteSource: TMDBRemoteSource,
+    private val connectivityObserver: ConnectivityObserver
 ) : RemoteMediator<Int, TVShow>() {
 
     val tvShowDao = tvShowsLocalSource.tvShowDao()
@@ -26,9 +28,10 @@ class TVShowsRemoteMediator(
         val currentTime = System.currentTimeMillis()
         val lastUpdated =
             remoteKeysDao.getLastUpdated() ?: return InitializeAction.LAUNCH_INITIAL_REFRESH
-
         val timeSinceLastUpdate = currentTime - lastUpdated
-        return if (timeSinceLastUpdate <= CACHE_TIMEOUT_MS) {
+        val isNetworkAvailable = connectivityObserver.isNetworkAvailable()
+
+        return if (!isNetworkAvailable || timeSinceLastUpdate <= CACHE_TIMEOUT_MS) {
             InitializeAction.SKIP_INITIAL_REFRESH
         } else {
             InitializeAction.LAUNCH_INITIAL_REFRESH

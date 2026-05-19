@@ -8,6 +8,7 @@ import androidx.paging.map
 import com.silliconpowerinc.tvpop.data.sources.TMDBRemoteSource
 import com.silliconpowerinc.tvpop.data.sources.TVShowsLocalSource
 import com.silliconpowerinc.tvpop.data.repositories.TVShowsRemoteMediator
+import com.silliconpowerinc.tvpop.data.utils.ConnectivityObserver
 import com.silliconpowerinc.tvpop.domain.models.TVShow
 import com.silliconpowerinc.tvpop.domain.repositories.TMDBRepository
 import kotlinx.coroutines.flow.Flow
@@ -17,7 +18,8 @@ import org.koin.core.annotation.Singleton
 @Singleton
 class TMDBRepositoryImpl(
     private val database: TVShowsLocalSource,
-    private val tmdbRemoteSource: TMDBRemoteSource
+    private val tmdbRemoteSource: TMDBRemoteSource,
+    private val connectivityObserver: ConnectivityObserver
 ) : TMDBRepository {
     private val cachedShows = mutableMapOf<Int, TVShow>()
 
@@ -39,7 +41,8 @@ class TMDBRepositoryImpl(
             ),
             remoteMediator = TVShowsRemoteMediator(
                 tvShowsLocalSource = database,
-                tmdbRemoteSource = tmdbRemoteSource
+                tmdbRemoteSource = tmdbRemoteSource,
+                connectivityObserver = connectivityObserver
             )
         ) {
             tvShowDao.pagingSource()
@@ -55,7 +58,7 @@ class TMDBRepositoryImpl(
      * This function should only be called after the paged data has been retrieved by
      * the UI layer; else, the requested show will be missing.
      *
-     * @param id - the TV show's ID
+     * @param id the TV show's ID
      * @return The TV show with the specified ID, if it has been previously retrieved from the API.
      */
     override fun getTVShow(id: Int): TVShow? = cachedShows[id]
