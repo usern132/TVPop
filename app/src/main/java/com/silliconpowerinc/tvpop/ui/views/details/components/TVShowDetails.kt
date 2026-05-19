@@ -1,5 +1,6 @@
 package com.silliconpowerinc.tvpop.ui.views.details.components
 
+import android.content.res.Configuration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -228,7 +229,12 @@ private fun CardRow(
 }
 
 @Composable
-@Preview(showBackground = true, heightDp = 1000)
+@Preview(showBackground = true, heightDp = 1000, uiMode = Configuration.ORIENTATION_PORTRAIT)
+@Preview(
+    showBackground = true,
+    uiMode = Configuration.ORIENTATION_LANDSCAPE,
+    device = "spec:width=891dp,height=1000dp"
+)
 private fun TVShowDetailsPreview() {
     TVShowDetails(TVShow.examples[0])
 }
