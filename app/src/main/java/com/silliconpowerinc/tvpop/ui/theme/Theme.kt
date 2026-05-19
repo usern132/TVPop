@@ -251,8 +251,7 @@ fun AppTheme(
     // Dynamic color is available on Android 12+
     content: @Composable() () -> Unit
 ) {
-    // darkTheme will be used in v2.0 of the app
-    val colorScheme = lightScheme
+    val colorScheme = if (darkTheme) darkScheme else lightScheme
 
     MaterialTheme(
         colorScheme = colorScheme,
