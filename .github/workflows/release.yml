@@ -1,11 +1,11 @@
 
-# Generated with https://runlane.dev/configurator and adapted by me.
+# Generated with https://runlane.dev/configurator and adapted from https://dev.to/aleksandr_ilinskiy/how-to-set-up-android-cicd-with-github-actions-firebase-distribution-play-store-30nk
 name: Release APK
 
 on:
   push:
-    branches:
-      - release/**
+    tags:
+      - v*.*
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -45,14 +45,10 @@ jobs:
           name: app-release
           path: app/build/outputs/apk/release/
 
-      - name: Extract version
-        id: extract
-        run: echo "version=${GITHUB_REF##*/}" >> $GITHUB_OUTPUT
-
       - name: Create Release
         uses: softprops/action-gh-release@153bb8e04406b158c6c84fc1615b65b24149a1fe # v2.6.1
         with:
-          tag_name: v${{ steps.extract.outputs.version }}
-          name: TVPop ${{ steps.extract.outputs.version }}
+          tag_name: ${GITHUB_REF_NAME}
+          name: TVPop ${GITHUB_REF_NAME}
           generate_release_notes: true
           token: ${{ secrets.GITHUB_TOKEN }}
