@@ -1,4 +1,4 @@
-package com.silliconpowerinc.tvpop.ui.common
+package com.silliconpowerinc.tvpop.ui.common.components
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize

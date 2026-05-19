@@ -32,7 +32,7 @@ import com.silliconpowerinc.tvpop.common.toLocalizedCountryNameWithEmoji
 import com.silliconpowerinc.tvpop.common.toLocalizedLanguageName
 import com.silliconpowerinc.tvpop.domain.models.TVShow
 import com.silliconpowerinc.tvpop.ui.common.BORDER_PADDING_DP
-import com.silliconpowerinc.tvpop.ui.common.MyAsyncImage
+import com.silliconpowerinc.tvpop.ui.common.components.MyAsyncImage
 import com.silliconpowerinc.tvpop.ui.theme.AppTypography
 import com.silliconpowerinc.tvpop.ui.theme.textShadow
 import java.text.DateFormat
