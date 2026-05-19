@@ -230,6 +230,7 @@ private fun CardRow(
 
 @Composable
 @Preview(showBackground = true, heightDp = 1000, uiMode = Configuration.ORIENTATION_PORTRAIT)
+@Preview(showBackground = true, device = "spec:width=300dp,height=1000dp")
 @Preview(
     showBackground = true,
     uiMode = Configuration.ORIENTATION_LANDSCAPE,
