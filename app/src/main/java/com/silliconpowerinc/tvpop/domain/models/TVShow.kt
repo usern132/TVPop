@@ -1,5 +1,7 @@
 package com.silliconpowerinc.tvpop.domain.models
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import java.text.SimpleDateFormat
@@ -8,8 +10,10 @@ import java.util.Date
 private const val IMAGE_WIDTH = "w1280"
 private const val IMAGES_BASE_URL = "https://image.tmdb.org/t/p/$IMAGE_WIDTH"
 
+@Entity
 @Serializable
 data class TVShow(
+    @PrimaryKey
     val id: Int,
     val name: String,
     @SerialName("backdrop_path")

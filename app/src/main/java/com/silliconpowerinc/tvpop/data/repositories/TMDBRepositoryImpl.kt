@@ -1,10 +1,13 @@
 package com.silliconpowerinc.tvpop.data.repositories
 
+import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.map
-import com.silliconpowerinc.tvpop.data.sources.TVShowPagingSource
+import com.silliconpowerinc.tvpop.data.sources.TMDBRemoteSource
+import com.silliconpowerinc.tvpop.data.sources.TVShowsLocalSource
+import com.silliconpowerinc.tvpop.data.repositories.TVShowsRemoteMediator
 import com.silliconpowerinc.tvpop.domain.models.TVShow
 import com.silliconpowerinc.tvpop.domain.repositories.TMDBRepository
 import kotlinx.coroutines.flow.Flow
@@ -12,7 +15,10 @@ import kotlinx.coroutines.flow.map
 import org.koin.core.annotation.Singleton
 
 @Singleton
-class TMDBRepositoryImpl : TMDBRepository {
+class TMDBRepositoryImpl(
+    private val database: TVShowsLocalSource,
+    private val tmdbRemoteSource: TMDBRemoteSource
+) : TMDBRepository {
     private val cachedShows = mutableMapOf<Int, TVShow>()
 
     /**
@@ -21,23 +27,29 @@ class TMDBRepositoryImpl : TMDBRepository {
      * @param language The language code to fetch the information in. Defaults to `en-US`.
      * @return Flow of PagingData with the list of TV shows returned by the API.
      */
-    override fun getTVShowsFlow(language: String): Flow<PagingData<TVShow>> =
-        Pager(
+    @OptIn(ExperimentalPagingApi::class)
+    override fun getTVShowsFlow(language: String): Flow<PagingData<TVShow>> {
+        val tvShowDao = database.tvShowDao()
+        return Pager(
             config = PagingConfig(
                 // Defined by TMDB's API
                 pageSize = 20,
                 // Items that are still loading will be null
                 enablePlaceholders = true
             ),
-            pagingSourceFactory = {
-                TVShowPagingSource(language = language)
-            }
-        ).flow.map { pagingData ->
+            remoteMediator = TVShowsRemoteMediator(
+                tvShowsLocalSource = database,
+                tmdbRemoteSource = tmdbRemoteSource
+            )
+        ) {
+            tvShowDao.pagingSource()
+        }.flow.map { pagingData ->
             pagingData.map { tvShow ->
                 cachedShows[tvShow.id] = tvShow
                 return@map tvShow
             }
         }
+    }
 
     /** Returns a TV show cached from the API's response and stored in a Collection.
      * This function should only be called after the paged data has been retrieved by
