@@ -2,24 +2,29 @@ package com.silliconpowerinc.tvpop.ui.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import androidx.paging.filter
+import com.silliconpowerinc.tvpop.data.utils.LanguageObserver
 import com.silliconpowerinc.tvpop.domain.models.TVShow
 import com.silliconpowerinc.tvpop.domain.repositories.TMDBRepository
 import com.silliconpowerinc.tvpop.ui.views.list.components.TVShowListEvent
-import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import org.koin.core.annotation.KoinViewModel
 
 @KoinViewModel
 class TVShowsViewModel(
-    private val tmdbRepository: TMDBRepository
+    private val tmdbRepository: TMDBRepository,
+    languageObserver: LanguageObserver
 ) : ViewModel() {
     fun onEvent(event: TVShowListEvent) {}
 
-    val tvShowsFlow: Flow<PagingData<TVShow>> =
-        tmdbRepository.getTVShowsFlow()
+    private val languageTagFlow = languageObserver.languageTagFlow
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    val tvShowsFlow = languageTagFlow.flatMapLatest { language ->
+        tmdbRepository.getTVShowsFlow(language = language)
             .map { pagingData ->
                 val receivedIds = mutableSetOf<Int>()
                 // Apply a filter to remove duplicate entries returned by the API
@@ -32,7 +37,7 @@ class TVShowsViewModel(
                     return@filter isNew
                 }
             }
-            .cachedIn(viewModelScope)
+    }.cachedIn(viewModelScope)
 
     fun getTVShow(id: Int): TVShow? = tmdbRepository.getTVShow(id)
 }

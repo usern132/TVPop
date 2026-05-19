@@ -7,7 +7,6 @@ import androidx.paging.PagingData
 import androidx.paging.map
 import com.silliconpowerinc.tvpop.data.sources.TMDBRemoteSource
 import com.silliconpowerinc.tvpop.data.sources.TVShowsLocalSource
-import com.silliconpowerinc.tvpop.data.repositories.TVShowsRemoteMediator
 import com.silliconpowerinc.tvpop.data.utils.ConnectivityObserver
 import com.silliconpowerinc.tvpop.domain.models.TVShow
 import com.silliconpowerinc.tvpop.domain.repositories.TMDBRepository
@@ -42,7 +41,8 @@ class TMDBRepositoryImpl(
             remoteMediator = TVShowsRemoteMediator(
                 tvShowsLocalSource = database,
                 tmdbRemoteSource = tmdbRemoteSource,
-                connectivityObserver = connectivityObserver
+                connectivityObserver = connectivityObserver,
+                language = language
             )
         ) {
             tvShowDao.pagingSource()

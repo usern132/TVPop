@@ -18,24 +18,27 @@ private const val CACHE_TIMEOUT_MS = CACHE_TIMEOUT_MINUTES * 60 * 1000
 class TVShowsRemoteMediator(
     private val tvShowsLocalSource: TVShowsLocalSource,
     private val tmdbRemoteSource: TMDBRemoteSource,
-    private val connectivityObserver: ConnectivityObserver
+    private val connectivityObserver: ConnectivityObserver,
+    private val language: String
 ) : RemoteMediator<Int, TVShow>() {
-
     val tvShowDao = tvShowsLocalSource.tvShowDao()
     val remoteKeysDao = tvShowsLocalSource.remoteKeysDao()
 
     override suspend fun initialize(): InitializeAction {
+        val currentlyCachedLanguage =
+            remoteKeysDao.getLanguage() ?: return InitializeAction.LAUNCH_INITIAL_REFRESH
+        if (currentlyCachedLanguage != language) return InitializeAction.LAUNCH_INITIAL_REFRESH
+
         val currentTime = System.currentTimeMillis()
         val lastUpdated =
             remoteKeysDao.getLastUpdated() ?: return InitializeAction.LAUNCH_INITIAL_REFRESH
         val timeSinceLastUpdate = currentTime - lastUpdated
-        val isNetworkAvailable = connectivityObserver.isNetworkAvailable()
 
-        return if (!isNetworkAvailable || timeSinceLastUpdate <= CACHE_TIMEOUT_MS) {
-            InitializeAction.SKIP_INITIAL_REFRESH
-        } else {
-            InitializeAction.LAUNCH_INITIAL_REFRESH
-        }
+        val isNetworkAvailable = connectivityObserver.isNetworkAvailable
+
+        if (!isNetworkAvailable || timeSinceLastUpdate <= CACHE_TIMEOUT_MS) return InitializeAction.SKIP_INITIAL_REFRESH
+
+        return InitializeAction.LAUNCH_INITIAL_REFRESH
     }
 
     override suspend fun load(
@@ -54,7 +57,7 @@ class TVShowsRemoteMediator(
                 }
             }
 
-            val response = tmdbRemoteSource.getTVShows(page = page)
+            val response = tmdbRemoteSource.getTVShows(page = page, language = language)
             val isLastPage = response.page >= response.totalPages
 
             tvShowsLocalSource.withTransaction {
@@ -66,7 +69,12 @@ class TVShowsRemoteMediator(
                 val prevKey = if (page == 1) null else page - 1
                 val nextKey = if (isLastPage) null else page + 1
                 val keys = response.results.map {
-                    TVShowRemoteKeys(showId = it.id, prevKey = prevKey, nextKey = nextKey)
+                    TVShowRemoteKeys(
+                        showId = it.id,
+                        prevKey = prevKey,
+                        nextKey = nextKey,
+                        language = language
+                    )
                 }
 
                 remoteKeysDao.insertAll(keys)

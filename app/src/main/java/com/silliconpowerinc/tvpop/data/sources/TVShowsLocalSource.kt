@@ -13,6 +13,7 @@ import androidx.room.TypeConverter
 import androidx.room.TypeConverters
 import com.silliconpowerinc.tvpop.domain.models.TVShow
 import kotlinx.serialization.json.Json
+import org.intellij.lang.annotations.Language
 
 
 @Database(entities = [TVShow::class, TVShowRemoteKeys::class], version = 1)
@@ -48,11 +49,12 @@ class TVShowTypeConverters {
     fun toStringList(value: String): List<String> = Json.decodeFromString(value)
 }
 
-@Entity(tableName = "remote_keys")
+@Entity
 data class TVShowRemoteKeys(
     @PrimaryKey val showId: Int,
     val prevKey: Int?,
     val nextKey: Int?,
+    val language: String,
     val lastUpdated: Long = System.currentTimeMillis()
 )
 
@@ -61,12 +63,15 @@ interface TVShowRemoteKeysDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(remoteKey: List<TVShowRemoteKeys>)
 
-    @Query("SELECT * FROM remote_keys WHERE showId = :showId")
+    @Query("SELECT * FROM tvshowremotekeys WHERE showId = :showId")
     suspend fun remoteKeys(showId: Int): TVShowRemoteKeys?
 
-    @Query("SELECT lastUpdated FROM remote_keys ORDER BY lastUpdated DESC LIMIT 1")
+    @Query("SELECT lastUpdated FROM tvshowremotekeys ORDER BY lastUpdated DESC LIMIT 1")
     suspend fun getLastUpdated(): Long?
 
-    @Query("DELETE FROM remote_keys")
+    @Query("SELECT language FROM tvshowremotekeys LIMIT 1")
+    suspend fun getLanguage(): String?
+
+    @Query("DELETE FROM tvshowremotekeys")
     suspend fun deleteAll()
 }

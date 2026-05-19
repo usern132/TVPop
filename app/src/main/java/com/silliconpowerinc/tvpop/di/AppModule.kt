@@ -4,6 +4,9 @@ import android.content.Context
 import androidx.room.Room
 import com.silliconpowerinc.tvpop.data.sources.TVShowsLocalSource
 import com.silliconpowerinc.tvpop.data.utils.ConnectivityObserver
+import com.silliconpowerinc.tvpop.data.utils.ConnectivityObserverImpl
+import com.silliconpowerinc.tvpop.data.utils.LanguageObserver
+import com.silliconpowerinc.tvpop.data.utils.LanguageObserverImpl
 import org.koin.core.annotation.ComponentScan
 import org.koin.core.annotation.Configuration
 import org.koin.core.annotation.Module
@@ -24,5 +27,9 @@ class AppModule {
 
     @Single
     fun provideConnectivityObserver(context: Context): ConnectivityObserver =
-        ConnectivityObserver(context)
+        ConnectivityObserverImpl(context)
+
+    @Single
+    fun provideLanguageObserver(context: Context): LanguageObserver =
+        LanguageObserverImpl(context)
 }
