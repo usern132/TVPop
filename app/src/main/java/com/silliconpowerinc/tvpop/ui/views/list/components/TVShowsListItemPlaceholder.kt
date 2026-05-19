@@ -11,7 +11,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun TVShowListItemPlaceholder(
+fun TVShowsListItemPlaceholder(
     modifier: Modifier = Modifier.fillMaxWidth()
 ) {
     Box(modifier = modifier) {
@@ -25,6 +25,6 @@ fun TVShowListItemPlaceholder(
 
 @Composable
 @Preview(showBackground = true)
-private fun TVShowListItemPlaceholderPreview() {
-    TVShowListItemPlaceholder()
+private fun TVShowsListItemPlaceholderPreview() {
+    TVShowsListItemPlaceholder()
 }

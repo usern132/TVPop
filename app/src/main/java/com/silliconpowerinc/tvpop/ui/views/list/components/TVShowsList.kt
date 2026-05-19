@@ -48,13 +48,13 @@ fun TVShowsList(
             val tvShow = lazyPagingItems[index]
             // item is loaded
             if (tvShow != null)
-                TVShowListItem(
+                TVShowsListItem(
                     modifier = Modifier.fillMaxWidth(),
                     tvShow = tvShow,
                     onEvent = onEvent
                 )
             // item is still loading
-            else TVShowListItemPlaceholder()
+            else TVShowsListItemPlaceholder()
         }
     }
 

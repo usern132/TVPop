@@ -45,7 +45,7 @@ sealed class TVShowListItemEvent : TVShowListEvent() {
 private const val LEFT_WEIGHT = 0.85f
 
 @Composable
-fun TVShowListItem(
+fun TVShowsListItem(
     modifier: Modifier = Modifier,
     tvShow: TVShow,
     onEvent: (event: TVShowListItemEvent) -> Unit
@@ -197,14 +197,14 @@ annotation class TVShowListItemBackgroundColorAnnotations
 
 @Composable
 @TVShowListItemBackgroundColorAnnotations
-private fun TVShowListItemPreview() {
-    TVShowListItem(tvShow = TVShow.examples[0], onEvent = {})
+private fun TVShowsListItemPreview() {
+    TVShowsListItem(tvShow = TVShow.examples[0], onEvent = {})
 }
 
 @Composable
 @TVShowListItemBackgroundColorAnnotations
-private fun TVShowListItemLongPreview() {
-    TVShowListItem(
+private fun TVShowsListItemLongPreview() {
+    TVShowsListItem(
         tvShow = TVShow.examples[0].copy(name = "This is a very long TV show name for testing purposes - very long!"),
         onEvent = {}
     )
