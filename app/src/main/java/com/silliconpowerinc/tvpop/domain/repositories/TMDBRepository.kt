@@ -6,5 +6,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface TMDBRepository {
     fun getTVShowsFlow(language: String = "en-US"): Flow<PagingData<TVShow>>
-    fun getTVShow(id: Int): com.silliconpowerinc.tvpop.domain.models.TVShow?
+    fun getTVShow(id: Int): TVShow?
 }

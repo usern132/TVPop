@@ -28,6 +28,7 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemKey
 import com.silliconpowerinc.tvpop.R
 import com.silliconpowerinc.tvpop.domain.models.TVShow
+import com.silliconpowerinc.tvpop.ui.common.BORDER_PADDING_DP
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 
@@ -62,7 +63,7 @@ fun TVShowsList(
         contentAlignment = Alignment.Center,
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp)
+            .padding(BORDER_PADDING_DP.dp)
     ) {
         when (val state = lazyPagingItems.loadState.refresh) {
             is LoadState.Loading -> CircularProgressIndicator(modifier = Modifier.size(32.dp))

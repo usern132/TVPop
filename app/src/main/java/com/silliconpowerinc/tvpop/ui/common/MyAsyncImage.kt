@@ -21,28 +21,6 @@ import coil3.compose.SubcomposeAsyncImage
 import coil3.compose.SubcomposeAsyncImageScope
 
 @Composable
-private fun CustomLoading() {
-    Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ) {
-        CircularProgressIndicator(
-            modifier = Modifier.size(48.dp)
-        )
-    }
-}
-
-@Composable
-private fun CustomError() {
-    Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ) {
-        Icon(Icons.Default.Error, contentDescription = null)
-    }
-}
-
-@Composable
 fun MyAsyncImage(
     model: Any?,
     contentDescription: String?,
@@ -79,4 +57,26 @@ fun MyAsyncImage(
         filterQuality = filterQuality,
         clipToBounds = clipToBounds
     )
+}
+
+@Composable
+private fun CustomLoading() {
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
+        CircularProgressIndicator(
+            modifier = Modifier.size(48.dp)
+        )
+    }
+}
+
+@Composable
+private fun CustomError() {
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
+        Icon(Icons.Default.Error, contentDescription = null)
+    }
 }
