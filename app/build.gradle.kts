@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.koin.compiler)
     kotlin("plugin.serialization") version "2.3.20"
     id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -83,6 +84,10 @@ dependencies {
     implementation(libs.coil3.coil.network.okhttp)
     implementation(libs.androidx.compose.material.icons.extended)
     implementation(libs.androidx.compose.ui.text.google.fonts)
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
+
+    ksp(libs.androidx.room.compiler)
 
     testImplementation(libs.junit)
 
