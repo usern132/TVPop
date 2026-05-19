@@ -28,11 +28,15 @@ funcionalidad opcional.
 
 * **Versión 1.0** - *[código](https://github.com/usern132/TVPop/tree/v1.0)* |
   *[lanzamiento (APK)](https://github.com/usern132/TVPop/releases/tag/v1.0)*
-    * Listado
-    * Detalle
+    * Listado de series
+    * Detalle de una serie
 * **Versión 2.0** - *[código](https://github.com/usern132/TVPop/releases/tag/v2.0)* |
   *[lanzamiento (APK)](https://github.com/usern132/TVPop/releases/tag/v2.0)*
-    * TODO
+    * Funcionamiento sin conexión tras una carga inicial
+    * Multiidioma (en función del idioma del sistema)
+      * Catalán
+      * Español
+      * Inglés
 * **Versión 3.0** - *[código](https://github.com/usern132/TVPop/releases/tag/v3.0)* |
   *[lanzamiento (APK)](https://github.com/usern132/TVPop/releases/tag/v3.0)*
     * TODO
@@ -58,3 +62,37 @@ sintaxi simplificada en
 comparación con [Hilt](https://dagger.dev/hilt/). Además, únicamente había probado Hilt antes de
 empezar este proyecto y ha
 sido una buena oportunidad para entrar en contacto con Koin.
+
+### Almacenaje local
+
+Se ha usado la librería **[Room](https://developer.android.com/training/data-storage/room/)** para
+mantener una
+cópia local de las series obtenidas de TMDB a modo de caché.
+
+### Paginación
+
+Se ha usado la librería
+**[Paging](https://developer.android.com/topic/libraries/architecture/paging/v3-overview)** para
+obtener las series de TMDB por páginas, de modo que solo se cargan las series a medida que el
+usuario se desplaza por la lista. Además, la librería también se ha usado para gestionar el guardado
+en caché de las series una vez recuperadas de TMDB.
+
+## Uso de IA en el desarrollo
+
+Se ha usado el agente de **Gemini** integrado en Android Studio para la mayoría de consultas (con el
+modelo
+_gemini-3-flash-preview_). Se ha usado
+principalmente en modo "Ask" (sin acceso a herramientas para modificar ficheros) y así poder:
+
+* Evitar modificaciones indeseadas en el código.
+* Revisar mejor las propuestas antes de ser integradas.
+* Ser más consciente de los cambios planteados.
+* Integrar las modificaciones dentro de la arquitectura y formato establecidos.
+
+Como segunda opción, se ha usado el cliente web de **Claude** para discusiones más generales que no
+requieren el contexto del proyecto. Por ejemplo, para discutir decisiones arquitectónicas antes de
+empezar el proyecto o para
+configurar [un flujo de GitHub Actions para crear lanzamientos automáticamente](.github/workflows/release.yml).
+
+En aquellos commits donde se ha usado una parte sustancial de código o ideas sugeridas por Gemini,
+este se ha marcado como co-autor. En toda ocasión se ha revisado y adaptado el código sugerido.
