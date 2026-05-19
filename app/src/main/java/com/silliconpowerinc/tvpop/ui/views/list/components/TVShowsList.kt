@@ -14,6 +14,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
+import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -40,38 +41,49 @@ fun TVShowsList(
     onEvent: (event: TVShowListEvent) -> Unit
 ) {
     val lazyPagingItems = tvShowsFlow.collectAsLazyPagingItems()
-    LazyColumn {
-        items(
-            lazyPagingItems.itemCount,
-            key = lazyPagingItems.itemKey { tvShow -> tvShow.id }
-        ) { index ->
-            val tvShow = lazyPagingItems[index]
-            // item is loaded
-            if (tvShow != null)
-                TVShowsListItem(
-                    modifier = Modifier.fillMaxWidth(),
-                    tvShow = tvShow,
-                    onEvent = onEvent
-                )
-            // item is still loading
-            else TVShowsListItemPlaceholder()
-        }
-    }
-
-    // Overlay shown with states other than loaded
-    Box(
+    PullToRefreshBox(
+        modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center,
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(BORDER_PADDING_DP.dp)
+        isRefreshing = lazyPagingItems.loadState.refresh is LoadState.Loading,
+        onRefresh = { lazyPagingItems.refresh() },
     ) {
         when (val state = lazyPagingItems.loadState.refresh) {
-            is LoadState.Loading -> CircularProgressIndicator(modifier = Modifier.size(32.dp))
+            is LoadState.Loading -> LoadingScreen()
             is LoadState.Error -> ErrorScreen(state, lazyPagingItems)
-            else -> {}
+            else -> {
+                LazyColumn {
+                    items(
+                        lazyPagingItems.itemCount,
+                        key = lazyPagingItems.itemKey { tvShow -> tvShow.id }
+                    ) { index ->
+                        val tvShow = lazyPagingItems[index]
+                        // item is loaded
+                        if (tvShow != null)
+                            TVShowsListItem(
+                                modifier = Modifier.fillMaxWidth(),
+                                tvShow = tvShow,
+                                onEvent = onEvent
+                            )
+                        // item is still loading
+                        else TVShowsListItemPlaceholder()
+                    }
+                }
+            }
         }
     }
 
+}
+
+@Composable
+private fun LoadingScreen() {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(BORDER_PADDING_DP.dp),
+        contentAlignment = Alignment.Center
+    ) {
+        CircularProgressIndicator(modifier = Modifier.size(32.dp))
+    }
 }
 
 @Composable
@@ -80,8 +92,14 @@ private fun ErrorScreen(
     lazyPagingItems: LazyPagingItems<TVShow>
 ) {
     Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(BORDER_PADDING_DP.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(8.dp)
+        verticalArrangement = Arrangement.spacedBy(
+            space = 8.dp,
+            alignment = Alignment.CenterVertically
+        )
     ) {
         Text(
             text = stringResource(
