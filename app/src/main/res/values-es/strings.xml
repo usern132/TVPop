@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">TVPop</string>
+    <string name="error_occurred">Ha ocurrido un error: %s</string>
+    <string name="retry">Reintentar</string>
+    <string name="movie_backdrop">Telón de fondo de la película</string>
+    <string name="origin_country_ies">País(es) de origen</string>
+    <string name="origin_language">Lengua de origen</string>
+    <string name="overview">Resumen</string>
+    <string name="first_air_date">Primera emisión</string>
+    <string name="rating">Valoración</string>
+    <string name="votes">%1$d votos</string>
+</resources>
