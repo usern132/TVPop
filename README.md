@@ -26,15 +26,15 @@ correspondiente. Cada lanzamiento incluye un binario APK producido por GitHub Ac
 Las versiones 1.0 y 2.0 incluyen las funcionalidades obligatorias. La versión 3.0 incluye una
 funcionalidad opcional.
 
-* **Versión 1.0** - *[código](https://github.com/usern132/TVPop/releases/tag/v1.0)* |
-  *[lanzamiento (APK)]([código](https://github.com/usern132/TVPop/tree/v1.0))*
+* **Versión 1.0** - *[código](https://github.com/usern132/TVPop/tree/v1.0)* |
+  *[lanzamiento (APK)](https://github.com/usern132/TVPop/releases/tag/v1.0)*
     * Listado
     * Detalle
 * **Versión 2.0** - *[código](https://github.com/usern132/TVPop/releases/tag/v2.0)* |
-  *[lanzamiento (APK)]([código](https://github.com/usern132/TVPop/tree/v2.0))*
+  *[lanzamiento (APK)](https://github.com/usern132/TVPop/releases/tag/v2.0)*
     * TODO
 * **Versión 3.0** - *[código](https://github.com/usern132/TVPop/releases/tag/v3.0)* |
-  *[lanzamiento (APK)]([código](https://github.com/usern132/TVPop/tree/v3.0))*
+  *[lanzamiento (APK)](https://github.com/usern132/TVPop/releases/tag/v3.0)*
     * TODO
 
 ## Compilación
