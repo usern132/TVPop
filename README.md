@@ -22,6 +22,21 @@ periodo de 15 minutos desde la última carga.
 |-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | <img src="screenshots/list_light.png" alt="Vista de la lista de series en modo claro" width="150"> <img src="screenshots/list_dark.png" alt="Vista de la lista de series en modo oscuro" width="150"> | <img src="screenshots/detail_light.png" alt="Vista de detalles de una serie en modo claro" width="150"> <img src="screenshots/detail_dark.png" alt="Vista de detalles de una serie en modo oscuro" width="150"> |
 
+### Funcionalidad extra
+
+Como funcionalidad extra, se ha implementado la **generación de resúmenes** de las series mediante
+un LLM.
+Se ha usado el servicio [Groq](https://groq.com/) para procesar las solicitudes con el
+modelo [Llama 3.1 8B Instant](https://console.groq.com/docs/model/llama-3.1-8b-instant). Se ha
+escogido este modelo por tener el límite más generoso de peticiones gratuitas y por su velocidad
+ante una tasca tan sencilla y no crítica.
+
+Ante las restricciones de tiempo y mi nula experiencia en el entorno de ML/AI en Android, he optado
+por esta solución sencilla para añadir valor a la aplicación. Gracias a la separación por capas, se
+puede modificar la capa de datos fácilmente para cambiar de proveedor de IA o incluso ejecutar un
+modelo en local en un futuro sin afectar al resto del proyecto
+(ver [AISource](app/src/main/java/com/silliconpowerinc/tvpop/data/sources/AISource.kt)).
+
 ## Versiones
 
 Se han incluido tres versiones de la aplicación correspondientes con las versiones pedidas en la
@@ -44,7 +59,7 @@ funcionalidad opcional.
         * Inglés
 * **Versión 3.0** - *[código](https://github.com/usern132/TVPop/tree/v3.0)* |
   *[lanzamiento (APK)](https://github.com/usern132/TVPop/releases/tag/v3.0)*
-    * TODO
+    * Resumen generado por IA
 
 ## Compilación
 
