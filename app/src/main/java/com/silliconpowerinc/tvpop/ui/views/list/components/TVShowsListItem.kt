@@ -110,7 +110,7 @@ private fun RatingCount(
     textShadow: Shadow
 ) {
     Text(
-        text = "(${tvShow.voteCount})",
+        text = "(${tvShow.voteCount ?: stringResource(R.string.n_a)})",
         style = AppTypography.bodySmall.copy(
             fontStyle = FontStyle.Italic,
             shadow = textShadow
@@ -139,7 +139,7 @@ private fun RatingStarRow(
             tint = MaterialTheme.colorScheme.primary
         )
         Text(
-            text = "%.2f".format(tvShow.voteAverage),
+            text = tvShow.voteAverage?.let { "%.2f".format(it) } ?: stringResource(R.string.n_a),
             style = AppTypography.bodyMedium.copy(
                 shadow = textShadow
             ),
@@ -160,12 +160,14 @@ private fun Subtitle(
 ) {
     val separator = "•"
     val details = listOf(
-        tvShow.originCountry[0].toLocalizedCountryNameWithEmoji(),
-        DateFormat.getDateInstance(DateFormat.SHORT)
-            .format(tvShow.firstAirDateObject)
+        tvShow.originCountry?.get(0)?.toLocalizedCountryNameWithEmoji(),
+        tvShow.firstAirDateObject?.let {
+            DateFormat.getDateInstance(DateFormat.SHORT)
+                .format(it)
+        }
     )
     Text(
-        text = details.joinToString(separator = " $separator "),
+        text = details.filterNotNull().joinToString(separator = " $separator "),
         maxLines = 1,
         overflow = TextOverflow.Ellipsis,
         style = AppTypography.bodyMedium.copy(
@@ -185,7 +187,7 @@ private fun Title(
     textShadow: Shadow
 ) {
     Text(
-        text = tvShow.name,
+        text = tvShow.name ?: stringResource(R.string.not_available),
         maxLines = 2,
         overflow = TextOverflow.Ellipsis,
         style = AppTypography.titleLarge.copy(
@@ -255,4 +257,10 @@ private fun TVShowsListItemLongPreview() {
         tvShow = TVShow.examples[0].copy(name = "This is a very long TV show name for testing purposes - very long!"),
         onEvent = {}
     )
+}
+
+@Composable
+@TVShowListItemBackgroundColorAnnotations
+private fun TVShowsListItemNullPreview() {
+    TVShowsListItem(tvShow = TVShow.nullExample, onEvent = {})
 }

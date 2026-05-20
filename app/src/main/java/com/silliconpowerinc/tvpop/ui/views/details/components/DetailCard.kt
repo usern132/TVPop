@@ -118,10 +118,11 @@ fun RatingDetailCard(
  */
 @Composable
 private fun RatingBar(tvShow: TVShow) {
+    val voteAverage = tvShow.voteAverage ?: return
     LinearProgressIndicator(
         modifier = Modifier.height(10.dp),
-        progress = { (tvShow.voteAverage / 10).toFloat() },
-        color = when (tvShow.voteAverage.toInt()) {
+        progress = { (voteAverage / 10).toFloat() },
+        color = when (voteAverage.toInt()) {
             0, 1 -> Color(0xFFB71C1C) // Dark Red
             2 -> Color(0xFFD32F2F)    // Red
             3 -> Color(0xFFE64A19)    // Deep Orange
@@ -156,21 +157,27 @@ private fun RatingAndVoteCount(tvShow: TVShow) {
             tint = MaterialTheme.colorScheme.tertiary
         )
         Text(
-            text = "%.2f".format(tvShow.voteAverage),
+            text = tvShow.voteAverage?.let { "%.2f".format(it) } ?: stringResource(R.string.n_a),
             style = AppTypography.headlineSmall,
             fontWeight = FontWeight.Bold
         )
     }
-    Text(text = stringResource(R.string.votes, tvShow.voteCount))
+    Text(
+        text = tvShow.voteCount?.let { stringResource(R.string.votes, it) }
+            ?: stringResource(R.string.n_a)
+    )
 }
 
 @Preview(showBackground = true)
 @Composable
-fun RatingDetailCardPreview(sizeDp: Dp = 200.dp) {
+fun RatingDetailCardPreview(
+    sizeDp: Dp = 200.dp,
+    tvShow: TVShow = TVShow.examples[0]
+) {
     Box(modifier = Modifier.size(sizeDp)) {
         RatingDetailCard(
             modifier = Modifier.padding(16.dp),
-            tvShow = TVShow.examples[0]
+            tvShow = tvShow
         )
     }
 }
@@ -185,4 +192,10 @@ fun RatingDetailCardPreviewLarge() {
 @Composable
 fun RatingDetailCardPreviewSmall() {
     RatingDetailCardPreview(sizeDp = 170.dp)
+}
+
+@Preview(showBackground = true)
+@Composable
+fun RatingDetailCardNullPreview(sizeDp: Dp = 200.dp) {
+    RatingDetailCardPreview(tvShow = TVShow.nullExample)
 }

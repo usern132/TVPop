@@ -32,38 +32,40 @@ private const val IMAGES_BASE_URL = "https://image.tmdb.org/t/p/$IMAGE_WIDTH"
 data class TVShow(
     @PrimaryKey
     val id: Int,
-    val name: String,
+    val name: String?,
     @SerialName("backdrop_path")
-    val relativeBackdropPath: String,
+    val relativeBackdropPath: String?,
     @SerialName("first_air_date")
-    val firstAirDate: String,
+    val firstAirDate: String?,
     @SerialName("genre_ids")
-    val genreIds: List<Int>,
+    val genreIds: List<Int>?,
     @SerialName("origin_country")
-    val originCountry: List<String>,
+    val originCountry: List<String>?,
     @SerialName("original_language")
-    val originalLanguage: String,
+    val originalLanguage: String?,
     @SerialName("original_name")
-    val originalName: String,
-    val overview: String,
-    val popularity: Double,
+    val originalName: String?,
+    val overview: String?,
+    val popularity: Double?,
     @SerialName("poster_path")
-    val posterPath: String,
+    val posterPath: String?,
     @SerialName("vote_average")
-    val voteAverage: Double,
+    val voteAverage: Double?,
     @SerialName("vote_count")
-    val voteCount: Int
+    val voteCount: Int?
 ) {
     /** Full URL for [relativeBackdropPath]. */
-    val backdropUrl: String
-        get() = "$IMAGES_BASE_URL$relativeBackdropPath"
+    val backdropUrl: String?
+        get() = if (relativeBackdropPath == null) null else "$IMAGES_BASE_URL$relativeBackdropPath"
 
     /** The [firstAirDate] parsed into a [Date] object. */
-    val firstAirDateObject: Date
+    val firstAirDateObject: Date?
         get() {
+            if (firstAirDate.isNullOrBlank()) return null
             val formatFromAPI = SimpleDateFormat("yyyy-MM-dd")
             val date = formatFromAPI.parse(this.firstAirDate)
-            return date ?: throw IllegalArgumentException("firstAirDate could not be parsed into a Date object")
+            return date
+                ?: throw IllegalArgumentException("firstAirDate could not be parsed into a Date object")
         }
 
     companion object {
@@ -144,6 +146,21 @@ data class TVShow(
                 voteAverage = 4.343,
                 voteCount = 75
             )
+        )
+        val nullExample = TVShow(
+            id = 1,
+            name = null,
+            relativeBackdropPath = null,
+            firstAirDate = null,
+            genreIds = null,
+            originCountry = null,
+            originalLanguage = null,
+            originalName = null,
+            overview = null,
+            popularity = null,
+            posterPath = null,
+            voteAverage = null,
+            voteCount = null
         )
     }
 }

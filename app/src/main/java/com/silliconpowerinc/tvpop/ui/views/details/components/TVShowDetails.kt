@@ -90,7 +90,7 @@ private fun DetailsCards(modifier: Modifier = Modifier, tvShow: TVShow) {
                     TitleAndDescriptionDetailCard(
                         modifier = cardModifier,
                         title = stringResource(R.string.overview),
-                        description = tvShow.overview
+                        description = tvShow.overview ?: stringResource(R.string.not_available)
                     )
                 }
             )
@@ -103,16 +103,17 @@ private fun DetailsCards(modifier: Modifier = Modifier, tvShow: TVShow) {
                     TitleAndDescriptionDetailCard(
                         modifier = cardModifier,
                         title = stringResource(R.string.origin_country_ies),
-                        description = tvShow.originCountry.joinToString(separator = "\n") { countryCode ->
+                        description = tvShow.originCountry?.joinToString(separator = "\n") { countryCode ->
                             countryCode.toLocalizedCountryNameWithEmoji()
-                        }
+                        } ?: stringResource(R.string.not_available)
                     )
                 },
                 {
                     TitleAndDescriptionDetailCard(
                         modifier = cardModifier,
                         title = stringResource(R.string.origin_language),
-                        description = tvShow.originalLanguage.toLocalizedLanguageName()
+                        description = tvShow.originalLanguage?.toLocalizedLanguageName()
+                            ?: stringResource(R.string.not_available)
                     )
                 }
             )
@@ -125,8 +126,10 @@ private fun DetailsCards(modifier: Modifier = Modifier, tvShow: TVShow) {
                     TitleAndDescriptionDetailCard(
                         modifier = cardModifier,
                         title = stringResource(R.string.first_air_date),
-                        description = DateFormat.getDateInstance(DateFormat.LONG)
-                            .format(tvShow.firstAirDateObject)
+                        description = tvShow.firstAirDateObject?.let {
+                            DateFormat.getDateInstance(DateFormat.LONG)
+                                .format(it)
+                        } ?: stringResource(R.string.not_available)
                     )
                 },
                 {
@@ -212,7 +215,7 @@ private fun Title(
     textShadow: Shadow
 ) {
     Text(
-        text = tvShow.name,
+        text = tvShow.name ?: stringResource(R.string.not_available),
         style = AppTypography.headlineLarge.copy(
             color = MaterialTheme.colorScheme.primary,
             shadow = textShadow
@@ -233,7 +236,7 @@ private fun OriginalTitle(
     textShadow: Shadow
 ) {
     Text(
-        text = tvShow.originalName,
+        text = tvShow.originalName ?: stringResource(R.string.not_available),
         style = AppTypography.titleMedium.copy(
             color = MaterialTheme.colorScheme.primary,
             fontStyle = FontStyle.Italic,
@@ -268,7 +271,6 @@ private fun CardRow(
     }
 }
 
-@Composable
 @Preview(showBackground = true, heightDp = 1000, uiMode = Configuration.ORIENTATION_PORTRAIT)
 @Preview(showBackground = true, device = "spec:width=300dp,height=1000dp")
 @Preview(
@@ -276,6 +278,16 @@ private fun CardRow(
     uiMode = Configuration.ORIENTATION_LANDSCAPE,
     device = "spec:width=891dp,height=1000dp"
 )
+annotation class TVShowDetailsPreviewAnnotation
+
+@Composable
+@TVShowDetailsPreviewAnnotation
 private fun TVShowDetailsPreview() {
     TVShowDetails(TVShow.examples[0])
+}
+
+@Composable
+@TVShowDetailsPreviewAnnotation
+private fun TVShowDetailsNullPreview() {
+    TVShowDetails(TVShow.nullExample)
 }

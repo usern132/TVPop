@@ -11,4 +11,5 @@
     <string name="rating">Valoració</string>
     <string name="votes">%1$d vots</string>
     <string name="not_available">No disponible</string>
+    <string name="n_a">N/A</string>
 </resources>
