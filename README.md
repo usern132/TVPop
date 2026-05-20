@@ -48,9 +48,9 @@ funcionalidad opcional.
 
 ## Compilación
 
-Antes de compilar el proyecto, es necesario especificar tu clave de la API de TMDB para poder
-autenticar las peticiones. Rellena su valor en el fichero `local.properties` (generado por Android
-Studio en la raíz del proyecto) a partir de la plantilla proporcionada, [
+Antes de compilar el proyecto, es necesario especificar tu clave de la API de TMDB y de la API de
+Groq para poder autenticar las peticiones. Rellena su valor en el fichero `local.properties`
+(generado por Android Studio en la raíz del proyecto) a partir de la plantilla proporcionada, [
 `local.properties.template`](local.properties.template). Copia el contenido de la plantilla al final
 de `local.properties` y rellena el valor de la clave.
 
