@@ -33,8 +33,9 @@ data class TVShow(
     @PrimaryKey
     val id: Int,
     val name: String?,
-    // AI overview generated once a user navigates to the details screen of the show
+    /** AI overview generated once a user navigates to the details screen of the show */
     val aiOverview: String? = null,
+    /** Language code for the last generated AI overview */
     val aiOverviewLanguage: String? = null,
     @SerialName("backdrop_path")
     val relativeBackdropPath: String?,

@@ -10,6 +10,13 @@ import androidx.compose.ui.res.stringResource
 import com.silliconpowerinc.tvpop.R
 import com.silliconpowerinc.tvpop.ui.views.details.AIOverviewState
 
+/**
+ * A [DetailCard] that displays an AI-generated overview of a TV show.
+ *
+ * @param modifier The modifier to be applied to the [androidx.compose.material3.Card].
+ * @param title The title of the detail.
+ * @param aiOverviewState The loading state of the AI overview, which determines what content to display.
+ */
 @Composable
 fun AIOverviewDetailCard(
     modifier: Modifier = Modifier,

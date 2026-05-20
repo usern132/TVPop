@@ -16,6 +16,9 @@ import androidx.navigation.compose.rememberNavController
 import com.silliconpowerinc.tvpop.ui.navigation.MainNavHost
 import com.silliconpowerinc.tvpop.ui.theme.AppTypography
 
+/**
+ * The main scaffold of the app, which contains the top app bar and the navigation host.
+ */
 @Composable
 fun MainScaffold() {
     MainScaffoldContent { paddingValues ->
