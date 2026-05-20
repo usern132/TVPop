@@ -72,7 +72,11 @@ class TMDBRepositoryImpl(
      */
     override fun getTVShow(id: Int): TVShow? = cachedShows[id]
 
-    override suspend fun updateTVShowAIOverview(id: Int, aiOverview: String) {
-        tvShowsLocalSource.tvShowDao().updateAIOverview(id, aiOverview)
+    override suspend fun updateTVShowAIOverview(id: Int, aiOverview: String, language: String) {
+        tvShowsLocalSource.tvShowDao().updateAIOverview(
+            id = id,
+            aiOverview = aiOverview,
+            aiOverviewLanguage = language
+        )
     }
 }

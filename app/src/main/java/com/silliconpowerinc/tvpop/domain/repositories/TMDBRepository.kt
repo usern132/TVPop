@@ -23,5 +23,13 @@ interface TMDBRepository {
      * @return The [TVShow] if found, or null otherwise.
      */
     fun getTVShow(id: Int): TVShow?
-    suspend fun updateTVShowAIOverview(id: Int, aiOverview: String)
+
+    /**
+     * Updates the AI-generated overview for a specific TV show in the repository.
+     *
+     * @param id The unique identifier of the TV show to update.
+     * @param aiOverview The new AI-generated overview text to be stored.
+     * @param language The language code for which the overview is being updated.
+     */
+    suspend fun updateTVShowAIOverview(id: Int, aiOverview: String, language: String)
 }

@@ -82,6 +82,7 @@ class TVShowsViewModel(
      */
     fun loadAIOverview(tvShowId: Int) {
         _uiState.value = _uiState.value.copy(aiOverviewState = AIOverviewState.Loading)
+        val currentLanguage = languageTagFlow.value
 
         val tvShow = tmdbRepository.getTVShow(tvShowId)
         if (tvShow == null) {
@@ -93,17 +94,20 @@ class TVShowsViewModel(
             return
         }
 
-        if (tvShow.aiOverview != null) {
+        if (tvShow.aiOverview != null && tvShow.aiOverviewLanguage == currentLanguage) {
             _uiState.value =
                 _uiState.value.copy(aiOverviewState = AIOverviewState.Success(tvShow.aiOverview))
         } else {
             viewModelScope.launch {
                 try {
-                    val language = languageTagFlow.value
                     val aiOverview =
-                        aiRepository.generateAIOverview(tvShow = tvShow, language = language)
+                        aiRepository.generateAIOverview(tvShow = tvShow, language = currentLanguage)
 
-                    tmdbRepository.updateTVShowAIOverview(id = tvShowId, aiOverview = aiOverview)
+                    tmdbRepository.updateTVShowAIOverview(
+                        id = tvShowId,
+                        aiOverview = aiOverview,
+                        language = currentLanguage
+                    )
 
                     _uiState.value =
                         _uiState.value.copy(aiOverviewState = AIOverviewState.Success(aiOverview))

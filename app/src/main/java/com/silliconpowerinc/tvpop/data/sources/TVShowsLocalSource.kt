@@ -17,7 +17,7 @@ import kotlinx.serialization.json.Json
 /**
  * The Room database for storing TV show information and remote pagination keys.
  */
-@Database(entities = [TVShow::class, TVShowRemoteKeys::class], version = 2)
+@Database(entities = [TVShow::class, TVShowRemoteKeys::class], version = 3)
 @TypeConverters(TVShowTypeConverters::class)
 abstract class TVShowsLocalSource : RoomDatabase() {
     /** Returns the DAO for managing [TVShow] entities. */
@@ -54,8 +54,8 @@ interface TVShowDao {
     suspend fun deleteAll()
 
     /** Updates the AI-generated overview for a specific TV show. */
-    @Query("UPDATE tvshow SET aiOverview = :aiOverview WHERE id = :id")
-    suspend fun updateAIOverview(id: Int, aiOverview: String)
+    @Query("UPDATE tvshow SET aiOverview = :aiOverview, aiOverviewLanguage = :aiOverviewLanguage WHERE id = :id")
+    suspend fun updateAIOverview(id: Int, aiOverview: String, aiOverviewLanguage: String)
 }
 
 /**

@@ -35,6 +35,7 @@ data class TVShow(
     val name: String?,
     // AI overview generated once a user navigates to the details screen of the show
     val aiOverview: String? = null,
+    val aiOverviewLanguage: String? = null,
     @SerialName("backdrop_path")
     val relativeBackdropPath: String?,
     @SerialName("first_air_date")
@@ -86,7 +87,8 @@ data class TVShow(
                 popularity = 123.45,
                 posterPath = "/mBcu8d6x6zB1el3MPNl7cZQEQ31.jpg",
                 voteAverage = 8.534,
-                voteCount = 1000
+                voteCount = 1000,
+                aiOverviewLanguage = "en-US"
             ),
             TVShow(
                 id = 2,
@@ -101,7 +103,8 @@ data class TVShow(
                 popularity = 98.76,
                 posterPath = "/mHZSq8LA5Dt48JjaOZ5tcPXQRVN.jpg",
                 voteAverage = 7.832,
-                voteCount = 500
+                voteCount = 500,
+                aiOverviewLanguage = "en-US"
             ),
             TVShow(
                 id = 3,
@@ -116,7 +119,8 @@ data class TVShow(
                 popularity = 75.32,
                 posterPath = "/eyTu5c8LniVciRZIOSHTvvkkgJa.jpg",
                 voteAverage = 6.921,
-                voteCount = 250
+                voteCount = 250,
+                aiOverviewLanguage = "en-US"
             ),
             TVShow(
                 id = 4,
@@ -131,7 +135,8 @@ data class TVShow(
                 popularity = 50.12,
                 posterPath = "/haJ9eHytVO3H3JooMJG1DiWwDNm.jpg",
                 voteAverage = 5.521,
-                voteCount = 150
+                voteCount = 150,
+                aiOverviewLanguage = "en-US"
             ),
             TVShow(
                 id = 5,
@@ -146,7 +151,8 @@ data class TVShow(
                 popularity = 25.67,
                 posterPath = "/3Cz7ySOQJmqiuTdrc6CY0r65yDI.jpg",
                 voteAverage = 4.343,
-                voteCount = 75
+                voteCount = 75,
+                aiOverviewLanguage = "en-US"
             )
         )
         val nullExample = TVShow(
@@ -162,7 +168,8 @@ data class TVShow(
             popularity = null,
             posterPath = null,
             voteAverage = null,
-            voteCount = null
+            voteCount = null,
+            aiOverviewLanguage = "en-US"
         )
     }
 }
