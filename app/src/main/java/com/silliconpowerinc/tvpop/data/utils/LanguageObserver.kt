@@ -11,6 +11,16 @@ import kotlinx.coroutines.flow.MutableStateFlow
  */
 interface LanguageObserver {
     /**
+     * List of the locales supported by the app.
+     */
+    val supportedLocales: List<String>
+
+    /**
+     * Default locale to fall back to if the device's current locale is not supported.
+     */
+    val defaultLocale: String
+
+    /**
      * A [Flow] that emits the current language tag (e.g., "en-US", "es-ES") whenever it changes.
      */
     val languageTagFlow: Flow<String>
@@ -22,7 +32,17 @@ interface LanguageObserver {
  * @property context The application context used to register for component callbacks.
  */
 class LanguageObserverImpl(private val context: Context) : LanguageObserver, ComponentCallbacks {
-    private val _languageTagFlow = MutableStateFlow(getCurrentLanguage())
+    override val supportedLocales: List<String>
+        get() = listOf(
+            "en-US",
+            "es-ES",
+            "ca-ES",
+        )
+
+    override val defaultLocale: String
+        get() = "en-US"
+
+    private val _languageTagFlow = MutableStateFlow(getCurrentLocale())
     override val languageTagFlow: Flow<String> = _languageTagFlow
 
     init {
@@ -30,11 +50,16 @@ class LanguageObserverImpl(private val context: Context) : LanguageObserver, Com
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
-        _languageTagFlow.value = newConfig.locales[0].toLanguageTag()
+        val newLocale = newConfig.locales[0].toLanguageTag()
+        val emitLocale = if (newLocale in supportedLocales) newLocale else defaultLocale
+        _languageTagFlow.value = emitLocale
     }
 
     @Deprecated("Deprecated in Java")
     override fun onLowMemory() {}
 
-    private fun getCurrentLanguage() = context.resources.configuration.locales[0].toLanguageTag()
+    private fun getCurrentLocale(): String {
+        val currentLocale = context.resources.configuration.locales[0].toLanguageTag()
+        return if (currentLocale in supportedLocales) currentLocale else defaultLocale
+    }
 }

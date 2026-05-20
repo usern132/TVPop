@@ -1,15 +1,18 @@
 package com.silliconpowerinc.tvpop.data.sources
 
+import android.util.Log
 import com.silliconpowerinc.tvpop.common.Secrets
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.engine.okhttp.OkHttp
 import io.ktor.client.plugins.HttpTimeout
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
-import io.ktor.client.plugins.logging.DEFAULT
+import io.ktor.client.plugins.logging.ANDROID
+import io.ktor.client.plugins.logging.LogLevel
 import io.ktor.client.plugins.logging.Logger
 import io.ktor.client.plugins.logging.Logging
 import io.ktor.client.request.get
+import io.ktor.client.request.parameter
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 import org.koin.core.annotation.Singleton
@@ -17,6 +20,8 @@ import org.koin.core.annotation.Singleton
 
 private const val BASE_URL = "https://api.themoviedb.org/3"
 private const val TIMEOUT_MS: Long = 15000
+
+private val TAG = TMDBRemoteSource::class.simpleName
 
 /**
  * Remote data source for interacting with The Movie Database (TMDB) API.
@@ -51,7 +56,8 @@ class TMDBRemoteSource {
         }
 
         install(Logging) {
-            logger = Logger.DEFAULT
+            logger = Logger.ANDROID
+            level = LogLevel.ALL
         }
     }
 
@@ -62,7 +68,12 @@ class TMDBRemoteSource {
      * @return The deserialized response from the API, containing the list of TV shows and pagination information.
      */
     suspend fun getTVShows(language: String = "en-US", page: Int): TMDBResponse {
-        return client.get("$BASE_URL/tv/popular?language=${language}&page=${page}")
-            .body()
+        Log.d(TAG, "Fetching TV with: language=$language, page=$page")
+        val response = client.get("$BASE_URL/tv/popular") {
+            parameter("language", language)
+            parameter("page", page)
+        }.body<TMDBResponse>()
+        Log.d(TAG, "Response: ${response.results.size} TV shows, page ${response.page} of ${response.totalPages}")
+        return response
     }
 }
