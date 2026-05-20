@@ -22,6 +22,7 @@ import kotlinx.serialization.json.Json
 abstract class TVShowsLocalSource : RoomDatabase() {
     /** Returns the DAO for managing [TVShow] entities. */
     abstract fun tvShowDao(): TVShowDao
+
     /** Returns the DAO for managing [TVShowRemoteKeys] entities. */
     abstract fun remoteKeysDao(): TVShowRemoteKeysDao
 }
@@ -35,8 +36,17 @@ interface TVShowDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(tvShows: List<TVShow>)
 
-    /** Provides a [PagingSource] for TV shows, ordered by popularity descending. */
-    @Query("SELECT * FROM tvshow ORDER BY popularity DESC")
+    /**
+     * Provides a [PagingSource] for TV shows.
+     * Joins with [TVShowRemoteKeys] to sort by the order they were fetched (using lastUpdated) then popularity.
+     */
+    @Query(
+        """
+        SELECT tvshow.* FROM tvshow 
+        JOIN tvshowremotekeys ON tvshow.id = tvshowremotekeys.showId 
+        ORDER BY tvshowremotekeys.lastUpdated ASC, tvshow.popularity DESC
+    """
+    )
     fun pagingSource(): PagingSource<Int, TVShow>
 
     /** Deletes all TV shows from the database. */
@@ -57,6 +67,7 @@ class TVShowTypeConverters {
 
     @TypeConverter
     fun fromStringList(value: List<String>): String = Json.encodeToString(value)
+
     @TypeConverter
     fun toStringList(value: String): List<String> = Json.decodeFromString(value)
 }
