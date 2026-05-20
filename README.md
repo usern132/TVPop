@@ -35,14 +35,14 @@ funcionalidad opcional.
   *[lanzamiento (APK)](https://github.com/usern132/TVPop/releases/tag/v1.0)*
     * Listado de series
     * Detalle de una serie
-* **Versión 2.0** - *[código](https://github.com/usern132/TVPop/releases/tag/v2.0)* |
+* **Versión 2.0** - *[código](https://github.com/usern132/TVPop/tree/v2.0)* |
   *[lanzamiento (APK)](https://github.com/usern132/TVPop/releases/tag/v2.0)*
     * Funcionamiento sin conexión tras una carga inicial
     * Multiidioma (en función del idioma del sistema)
         * Catalán
         * Español
         * Inglés
-* **Versión 3.0** - *[código](https://github.com/usern132/TVPop/releases/tag/v3.0)* |
+* **Versión 3.0** - *[código](https://github.com/usern132/TVPop/tree/v3.0)* |
   *[lanzamiento (APK)](https://github.com/usern132/TVPop/releases/tag/v3.0)*
     * TODO
 
