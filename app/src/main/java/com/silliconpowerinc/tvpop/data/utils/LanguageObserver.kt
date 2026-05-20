@@ -3,8 +3,8 @@ package com.silliconpowerinc.tvpop.data.utils
 import android.content.ComponentCallbacks
 import android.content.Context
 import android.content.res.Configuration
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 
 /**
  * Interface for observing the current language of the device.
@@ -21,9 +21,9 @@ interface LanguageObserver {
     val defaultLocale: String
 
     /**
-     * A [Flow] that emits the current language tag (e.g., "en-US", "es-ES") whenever it changes.
+     * A [StateFlow] that emits the current language tag (e.g., "en-US", "es-ES") whenever it changes.
      */
-    val languageTagFlow: Flow<String>
+    val languageTagFlow: StateFlow<String>
 }
 
 /**
@@ -43,7 +43,7 @@ class LanguageObserverImpl(private val context: Context) : LanguageObserver, Com
         get() = "en-US"
 
     private val _languageTagFlow = MutableStateFlow(getCurrentLocale())
-    override val languageTagFlow: Flow<String> = _languageTagFlow
+    override val languageTagFlow: StateFlow<String> = _languageTagFlow
 
     init {
         context.registerComponentCallbacks(this)

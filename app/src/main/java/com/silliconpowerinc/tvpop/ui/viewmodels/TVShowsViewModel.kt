@@ -6,11 +6,18 @@ import androidx.paging.cachedIn
 import androidx.paging.filter
 import com.silliconpowerinc.tvpop.data.utils.LanguageObserver
 import com.silliconpowerinc.tvpop.domain.models.TVShow
+import com.silliconpowerinc.tvpop.domain.repositories.AIRepository
 import com.silliconpowerinc.tvpop.domain.repositories.TMDBRepository
+import com.silliconpowerinc.tvpop.ui.views.details.AIOverviewError
+import com.silliconpowerinc.tvpop.ui.views.details.AIOverviewState
+import com.silliconpowerinc.tvpop.ui.views.details.DetailsScreenState
 import com.silliconpowerinc.tvpop.ui.views.list.components.TVShowListEvent
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 import org.koin.core.annotation.KoinViewModel
 
 /**
@@ -23,6 +30,7 @@ import org.koin.core.annotation.KoinViewModel
 @KoinViewModel
 class TVShowsViewModel(
     private val tmdbRepository: TMDBRepository,
+    private val aiRepository: AIRepository,
     languageObserver: LanguageObserver
 ) : ViewModel() {
     /**
@@ -32,7 +40,10 @@ class TVShowsViewModel(
      */
     fun onEvent(event: TVShowListEvent) {}
 
-    private val languageTagFlow = languageObserver.languageTagFlow
+    private val _uiState = MutableStateFlow(DetailsScreenState(AIOverviewState.Loading))
+    val uiState = _uiState.asStateFlow()
+
+    val languageTagFlow = languageObserver.languageTagFlow
 
     /**
      * The flow of paginated TV show data, provided in the device's current language.
@@ -62,4 +73,40 @@ class TVShowsViewModel(
      * @return The [TVShow] if found, or null otherwise.
      */
     fun getTVShow(id: Int): TVShow? = tmdbRepository.getTVShow(id)
+
+    fun loadAIOverview(tvShowId: Int) {
+        _uiState.value = _uiState.value.copy(aiOverviewState = AIOverviewState.Loading)
+
+        val tvShow = tmdbRepository.getTVShow(tvShowId)
+        if (tvShow == null) {
+            _uiState.value =
+                _uiState.value.copy(
+                    aiOverviewState = AIOverviewState.Error(
+                        errorType = AIOverviewError.TVShowNotFound,
+                    )
+                )
+            return
+        }
+
+        if (tvShow.aiOverview != null) {
+            _uiState.value =
+                _uiState.value.copy(aiOverviewState = AIOverviewState.Success(tvShow.aiOverview))
+        } else {
+            viewModelScope.launch {
+                try {
+                    val language = languageTagFlow.value
+                    val aiOverview =
+                        aiRepository.generateAIOverview(tvShow = tvShow, language = language)
+
+                    tmdbRepository.updateTVShowAIOverview(id = tvShowId, aiOverview = aiOverview)
+
+                    _uiState.value =
+                        _uiState.value.copy(aiOverviewState = AIOverviewState.Success(aiOverview))
+                } catch (e: Exception) {
+                    _uiState.value =
+                        _uiState.value.copy(aiOverviewState = AIOverviewState.Error(message = e.localizedMessage))
+                }
+            }
+        }
+    }
 }

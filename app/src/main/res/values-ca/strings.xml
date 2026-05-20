@@ -12,4 +12,6 @@
     <string name="votes">%1$d vots</string>
     <string name="not_available">No disponible</string>
     <string name="n_a">N/A</string>
+    <string name="ai_overview">Resum amb IA</string>
+    <string name="unknown_error_occurred">S\'ha produit un error desconegut</string>
 </resources>

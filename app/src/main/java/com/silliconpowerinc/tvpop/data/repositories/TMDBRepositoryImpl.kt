@@ -71,4 +71,8 @@ class TMDBRepositoryImpl(
      * @return The TV show with the specified ID, if it has been previously retrieved from the API.
      */
     override fun getTVShow(id: Int): TVShow? = cachedShows[id]
+
+    override suspend fun updateTVShowAIOverview(id: Int, aiOverview: String) {
+        tvShowsLocalSource.tvShowDao().updateAIOverview(id, aiOverview)
+    }
 }

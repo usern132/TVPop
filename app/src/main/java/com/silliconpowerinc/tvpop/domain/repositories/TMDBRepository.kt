@@ -23,4 +23,5 @@ interface TMDBRepository {
      * @return The [TVShow] if found, or null otherwise.
      */
     fun getTVShow(id: Int): TVShow?
+    suspend fun updateTVShowAIOverview(id: Int, aiOverview: String)
 }

@@ -37,7 +37,9 @@ import com.silliconpowerinc.tvpop.ui.common.BORDER_PADDING_DP
 import com.silliconpowerinc.tvpop.ui.common.components.MyAsyncImage
 import com.silliconpowerinc.tvpop.ui.theme.AppTypography
 import com.silliconpowerinc.tvpop.ui.theme.textShadow
+import com.silliconpowerinc.tvpop.ui.views.details.AIOverviewState
 import com.silliconpowerinc.tvpop.ui.views.details.DetailsScreenState
+import com.silliconpowerinc.tvpop.ui.views.details.components.detailcards.AIOverviewDetailCard
 import com.silliconpowerinc.tvpop.ui.views.details.components.detailcards.RatingDetailCard
 import com.silliconpowerinc.tvpop.ui.views.details.components.detailcards.TitleAndDescriptionDetailCard
 import java.text.DateFormat
@@ -49,9 +51,10 @@ private const val BACKDROP_WEIGHT = 0.4f
  * It contains a banner with a backdrop image and a title and a list of cards with the details.
  *
  * @param tvShow The TV show to display details for.
+ * @param state The state of the details screen, containing the AI overview loading state.
  */
 @Composable
-fun TVShowDetails(tvShow: TVShow) {
+fun TVShowDetails(tvShow: TVShow, state: DetailsScreenState) {
     val textShadow = MaterialTheme.textShadow
 
     Column {
@@ -66,7 +69,8 @@ fun TVShowDetails(tvShow: TVShow) {
             modifier = Modifier
                 .weight(1 - BACKDROP_WEIGHT)
                 .padding(horizontal = BORDER_PADDING_DP.dp),
-            tvShow = tvShow
+            tvShow = tvShow,
+            state = state
         )
     }
 }
@@ -79,13 +83,31 @@ private const val TALL_CARD_HEIGHT_DP = 200
  * @param tvShow The TV show to display details for.
  */
 @Composable
-private fun DetailsCards(modifier: Modifier = Modifier, tvShow: TVShow) {
+private fun DetailsCards(
+    modifier: Modifier = Modifier,
+    tvShow: TVShow,
+    state: DetailsScreenState
+) {
     val cardModifier = Modifier.fillMaxSize()
     Column(
         modifier = modifier.verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         Spacer(modifier = Modifier.padding(vertical = 4.dp))
+
+        CardRow(
+            modifier = Modifier.height(SHORT_CARD_HEIGHT_DP.dp),
+            cards = listOf(
+                {
+                    AIOverviewDetailCard(
+                        modifier = cardModifier,
+                        title = stringResource(R.string.ai_overview),
+                        aiOverviewState = state.aiOverviewState
+                    )
+                }
+            )
+        )
+
         CardRow(
             modifier = Modifier.height(TALL_CARD_HEIGHT_DP.dp),
             cards = listOf(
@@ -286,11 +308,17 @@ annotation class TVShowDetailsPreviewAnnotation
 @Composable
 @TVShowDetailsPreviewAnnotation
 private fun TVShowDetailsPreview() {
-    TVShowDetails(TVShow.examples[0])
+    TVShowDetails(
+        TVShow.examples[0],
+        state = DetailsScreenState(aiOverviewState = AIOverviewState.Success()),
+    )
 }
 
 @Composable
 @TVShowDetailsPreviewAnnotation
 private fun TVShowDetailsNullPreview() {
-    TVShowDetails(TVShow.nullExample)
+    TVShowDetails(
+        TVShow.nullExample,
+        state = DetailsScreenState(aiOverviewState = AIOverviewState.Success()),
+    )
 }

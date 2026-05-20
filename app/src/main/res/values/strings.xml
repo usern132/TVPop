@@ -11,4 +11,6 @@
     <string name="votes">%1$d votes</string>
     <string name="not_available">Not available</string>
     <string name="n_a">N/A</string>
+    <string name="ai_overview">AI overview</string>
+    <string name="unknown_error_occurred">An unknown error occurred</string>
 </resources>

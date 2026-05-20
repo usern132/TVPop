@@ -24,7 +24,8 @@ class AppModule {
             context,
             TVShowsLocalSource::class.java,
             "tv_shows_database"
-        ).build()
+        ).fallbackToDestructiveMigration(dropAllTables = true)
+            .build()
     }
 
     @Single
