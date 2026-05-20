@@ -43,11 +43,11 @@ fun RatingDetailCard(
         title = stringResource(R.string.rating)
     ) {
         Column(
-            modifier = Modifier.Companion.fillMaxSize(),
-            horizontalAlignment = Alignment.Companion.CenterHorizontally,
+            modifier = Modifier.fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(
                 space = 8.dp,
-                alignment = Alignment.Companion.CenterVertically
+                alignment = Alignment.CenterVertically
             )
         ) {
             RatingAndVoteCount(tvShow)
@@ -63,7 +63,7 @@ fun RatingDetailCard(
 private fun RatingBar(tvShow: TVShow) {
     val voteAverage = tvShow.voteAverage ?: return
     LinearProgressIndicator(
-        modifier = Modifier.Companion.height(10.dp),
+        modifier = Modifier.height(10.dp),
         progress = { (voteAverage / 10).toFloat() },
         color = when (voteAverage.toInt()) {
             0, 1 -> Color(0xFFB71C1C) // Dark Red
@@ -90,19 +90,19 @@ private fun RatingBar(tvShow: TVShow) {
 @Composable
 private fun RatingAndVoteCount(tvShow: TVShow) {
     Row(
-        verticalAlignment = Alignment.Companion.CenterVertically,
+        verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(4.dp)
     ) {
         Icon(
             imageVector = Icons.Default.Star,
             contentDescription = null,
-            modifier = Modifier.Companion.size(40.dp),
+            modifier = Modifier.size(40.dp),
             tint = MaterialTheme.colorScheme.tertiary
         )
         Text(
             text = tvShow.voteAverage?.let { "%.2f".format(it) } ?: stringResource(R.string.n_a),
             style = AppTypography.headlineSmall,
-            fontWeight = FontWeight.Companion.Bold
+            fontWeight = FontWeight.Bold
         )
     }
     Text(
@@ -115,11 +115,11 @@ private fun RatingAndVoteCount(tvShow: TVShow) {
 @Composable
 private fun RatingDetailCardPreview(
     sizeDp: Dp = 200.dp,
-    tvShow: TVShow = TVShow.Companion.examples[0]
+    tvShow: TVShow = TVShow.examples[0]
 ) {
-    Box(modifier = Modifier.Companion.size(sizeDp)) {
+    Box(modifier = Modifier.size(sizeDp)) {
         RatingDetailCard(
-            modifier = Modifier.Companion.padding(16.dp),
+            modifier = Modifier.padding(16.dp),
             tvShow = tvShow
         )
     }
@@ -140,5 +140,5 @@ private fun RatingDetailCardPreviewSmall() {
 @Preview(showBackground = true)
 @Composable
 private fun RatingDetailCardNullPreview(sizeDp: Dp = 200.dp) {
-    RatingDetailCardPreview(tvShow = TVShow.Companion.nullExample)
+    RatingDetailCardPreview(tvShow = TVShow.nullExample)
 }

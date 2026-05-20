@@ -24,7 +24,7 @@ import com.silliconpowerinc.tvpop.domain.models.TVShow
  */
 @Composable
 fun TitleAndDescriptionDetailCard(
-    modifier: Modifier = Modifier.Companion,
+    modifier: Modifier = Modifier,
     title: String,
     description: String
 ) {
@@ -34,7 +34,7 @@ fun TitleAndDescriptionDetailCard(
     ) {
         Text(
             // Allow the text inside the card to be scrolled if it doesn't fit
-            modifier = Modifier.Companion.verticalScroll(rememberScrollState()),
+            modifier = Modifier.verticalScroll(rememberScrollState()),
             text = description.ifEmpty { stringResource(R.string.not_available) },
         )
     }
@@ -44,11 +44,11 @@ fun TitleAndDescriptionDetailCard(
 @Composable
 private fun TitleAndDescriptionDetailCardPreview(
     sizeDp: Dp = 200.dp,
-    tvShow: TVShow = TVShow.Companion.examples[0]
+    tvShow: TVShow = TVShow.examples[0]
 ) {
-    Box(modifier = Modifier.Companion.size(sizeDp)) {
+    Box(modifier = Modifier.size(sizeDp)) {
         TitleAndDescriptionDetailCard(
-            modifier = Modifier.Companion.padding(16.dp),
+            modifier = Modifier.padding(16.dp),
             title = stringResource(R.string.overview),
             description = tvShow.overview ?: ""
         )
