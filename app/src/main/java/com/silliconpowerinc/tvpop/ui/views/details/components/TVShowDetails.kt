@@ -37,6 +37,9 @@ import com.silliconpowerinc.tvpop.ui.common.BORDER_PADDING_DP
 import com.silliconpowerinc.tvpop.ui.common.components.MyAsyncImage
 import com.silliconpowerinc.tvpop.ui.theme.AppTypography
 import com.silliconpowerinc.tvpop.ui.theme.textShadow
+import com.silliconpowerinc.tvpop.ui.views.details.DetailsScreenState
+import com.silliconpowerinc.tvpop.ui.views.details.components.detailcards.RatingDetailCard
+import com.silliconpowerinc.tvpop.ui.views.details.components.detailcards.TitleAndDescriptionDetailCard
 import java.text.DateFormat
 
 private const val BACKDROP_WEIGHT = 0.4f
