@@ -18,6 +18,10 @@ import org.koin.core.annotation.Singleton
 private const val BASE_URL = "https://api.themoviedb.org/3"
 private const val TIMEOUT_MS: Long = 15000
 
+/**
+ * Remote data source for interacting with The Movie Database (TMDB) API.
+ * Uses Ktor's [HttpClient] with OkHttp engine to perform network requests.
+ */
 @Singleton
 class TMDBRemoteSource {
 

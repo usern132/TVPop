@@ -17,6 +17,12 @@ fun String.toLocalizedCountryName(): String {
 
 private const val FIRST_REGIONAL_INDICATOR_SYMBOL = 0x1F1E6
 
+/**
+ * Converts a two-letter country code to its corresponding flag emoji.
+ *
+ * @receiver The ISO 3166-1 alpha-2 country code (e.g., "US", "ES").
+ * @return The flag emoji associated with the country code, or a default flag if the code is invalid.
+ */
 fun String.toFlagEmoji(): String {
     val countryCode = this
 
@@ -29,6 +35,12 @@ fun String.toFlagEmoji(): String {
     }.joinToString("")
 }
 
+/**
+ * Converts a country code to a string with the flag emoji and the localized country name.
+ *
+ * @receiver The country code to be converted (e.g., "US", "FR").
+ * @return A string with the flag emoji and the localized country name (e.g., "🇺🇸 United States").
+ */
 fun String.toLocalizedCountryNameWithEmoji(): String {
     val countryCode = this
     return countryCode.toFlagEmoji() + " " + countryCode.toLocalizedCountryName()
@@ -36,7 +48,7 @@ fun String.toLocalizedCountryNameWithEmoji(): String {
 
 /**
  * Converts a language code to its localized language name based on the device's current locale settings.
- * @receiver The country code to be converted (e.g., "en", "es").
+ * @receiver The language code to be converted (e.g., "en", "es").
  * @return The localized language name corresponding to the provided language code (e.g., "English", "Spanish").
  */
 fun String.toLocalizedLanguageName(): String {

@@ -14,10 +14,18 @@ import com.silliconpowerinc.tvpop.ui.views.list.ListScreen
 import com.silliconpowerinc.tvpop.ui.views.list.components.TVShowListItemEvent
 import kotlinx.serialization.Serializable
 
+/**
+ * Sealed interface representing the routes in the main navigation graph.
+ */
 sealed interface MainRoute {
+    /** Route for the TV show list screen. */
     @Serializable
     object List : MainRoute
 
+    /**
+     * Route for the TV show details screen.
+     * @property id The ID of the TV show to display details for.
+     */
     @Serializable
     data class Details(val id: Int) : MainRoute
 }
@@ -33,6 +41,13 @@ val popEnterTransition =
 val popExitTransition =
     slideOutHorizontally(animationSpec = tween(ANIM_DURATION), targetOffsetX = { it })
 
+/**
+ * The main navigation host of the application.
+ * Defines the navigation graph, screen routes, and transitions.
+ *
+ * @param modifier The modifier to be applied to the [NavHost].
+ * @param navController The [NavHostController] managing navigation within this host.
+ */
 @Composable
 fun MainNavHost(
     modifier: Modifier = Modifier,

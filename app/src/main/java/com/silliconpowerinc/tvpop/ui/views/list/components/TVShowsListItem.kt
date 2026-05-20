@@ -38,12 +38,26 @@ import com.silliconpowerinc.tvpop.ui.theme.AppTypography
 import com.silliconpowerinc.tvpop.ui.theme.textShadow
 import java.text.DateFormat
 
+/**
+ * Events related to a single TV show item in the list.
+ */
 sealed class TVShowListItemEvent : TVShowListEvent() {
+    /**
+     * Event triggered when a TV show item is clicked.
+     * @property id The ID of the clicked TV show.
+     */
     data class Click(val id: Int) : TVShowListItemEvent()
 }
 
 private const val LEFT_WEIGHT = 0.85f
 
+/**
+ * Displays a single item in the TV show list.
+ *
+ * @param modifier The modifier to be applied to the item.
+ * @param tvShow The TV show to display.
+ * @param onEvent Callback for events triggered by the item.
+ */
 @Composable
 fun TVShowsListItem(
     modifier: Modifier = Modifier,
@@ -85,6 +99,11 @@ fun TVShowsListItem(
     }
 }
 
+/**
+ * Displays the number of votes for the TV show.
+ * @param tvShow The [TVShow] to display the number of votes for.
+ * @param textShadow The shadow to add behind the text for readability.
+ */
 @Composable
 private fun RatingCount(
     tvShow: TVShow,
@@ -99,6 +118,11 @@ private fun RatingCount(
     )
 }
 
+/**
+ * Displays the average rating of the TV show with a star icon.
+ * @param tvShow The [TVShow] to display the rating for.
+ * @param textShadow The shadow to add behind the text for readability.
+ */
 @Composable
 private fun RatingStarRow(
     tvShow: TVShow,
@@ -124,8 +148,16 @@ private fun RatingStarRow(
     }
 }
 
+/**
+ * Displays a subtitle with origin country and air date.
+ * @param tvShow The [TVShow] to display the subtitle for.
+ * @param textShadow The shadow to add behind the text for readability.
+ */
 @Composable
-private fun Subtitle(tvShow: TVShow, textShadow: Shadow) {
+private fun Subtitle(
+    tvShow: TVShow,
+    textShadow: Shadow
+) {
     val separator = "•"
     val details = listOf(
         tvShow.originCountry[0].toLocalizedCountryNameWithEmoji(),
@@ -142,8 +174,16 @@ private fun Subtitle(tvShow: TVShow, textShadow: Shadow) {
     )
 }
 
+/**
+ * Displays the main title of the TV show.
+ * @param tvShow The [TVShow] to display the title for.
+ * @param textShadow The shadow to add behind the text for readability.
+ */
 @Composable
-private fun Title(tvShow: TVShow, textShadow: Shadow) {
+private fun Title(
+    tvShow: TVShow,
+    textShadow: Shadow
+) {
     Text(
         text = tvShow.name,
         maxLines = 2,
@@ -156,6 +196,10 @@ private fun Title(tvShow: TVShow, textShadow: Shadow) {
     )
 }
 
+/**
+ * Displays the backdrop image of the TV show.
+ * @param tvShow The [TVShow] to display the backdrop image for.
+ */
 @Composable
 private fun BackgroundImage(tvShow: TVShow) {
     MyAsyncImage(
@@ -168,6 +212,9 @@ private fun BackgroundImage(tvShow: TVShow) {
     )
 }
 
+/**
+ * Horizontal gradient used in the background of the list item for better text readability.
+ */
 @Composable
 private fun BackgroundGradient() {
     val surfaceColor = MaterialTheme.colorScheme.surface.copy(alpha = 0.9f)

@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -40,6 +41,12 @@ import java.text.DateFormat
 
 private const val BACKDROP_WEIGHT = 0.4f
 
+/**
+ * Composable that displays the detailed information of a [TVShow].
+ * It contains a banner with a backdrop image and a title and a list of cards with the details.
+ *
+ * @param tvShow The TV show to display details for.
+ */
 @Composable
 fun TVShowDetails(tvShow: TVShow) {
     val textShadow = MaterialTheme.textShadow
@@ -64,6 +71,10 @@ fun TVShowDetails(tvShow: TVShow) {
 private const val SHORT_CARD_HEIGHT_DP = 150
 private const val TALL_CARD_HEIGHT_DP = 200
 
+/**
+ * Displays the list of detail cards for the given TV show.
+ * @param tvShow The TV show to display details for.
+ */
 @Composable
 private fun DetailsCards(modifier: Modifier = Modifier, tvShow: TVShow) {
     val cardModifier = Modifier.fillMaxSize()
@@ -129,6 +140,11 @@ private fun DetailsCards(modifier: Modifier = Modifier, tvShow: TVShow) {
     }
 }
 
+/**
+ * Displays the banner section of the details screen, containing the backdrop image and, title, and original title.
+ * @param tvShow The TV show to display the banner for.
+ * @param textShadow The shadow to add behind the text for readability.
+ */
 @Composable
 private fun Banner(
     modifier: Modifier,
@@ -150,6 +166,10 @@ private fun Banner(
     }
 }
 
+/**
+ * Displays the backdrop image using [MyAsyncImage].
+ * @param tvShow The TV show to display the backdrop image for.
+ */
 @Composable
 private fun BackdropImage(tvShow: TVShow) {
     MyAsyncImage(
@@ -160,6 +180,9 @@ private fun BackdropImage(tvShow: TVShow) {
     )
 }
 
+/**
+ * Vertical gradient used over the backdrop image to improve text readability.
+ */
 @Composable
 private fun BackgroundGradient() {
     val surfaceColor = MaterialTheme.colorScheme.surface.copy(alpha = 0.9f)
@@ -178,6 +201,11 @@ private fun BackgroundGradient() {
     )
 }
 
+/**
+ * Displays the title of the TV show.
+ * @param tvShow The TV show to display the title for.
+ * @param textShadow The shadow to add behind the text for readability.
+ */
 @Composable
 private fun Title(
     tvShow: TVShow,
@@ -194,6 +222,11 @@ private fun Title(
     )
 }
 
+/**
+ * Displays the original title of the TV show.
+ * @param tvShow The TV show to display the original title for.
+ * @param textShadow The shadow to add behind the text for readability.
+ */
 @Composable
 private fun OriginalTitle(
     tvShow: TVShow,
@@ -211,6 +244,13 @@ private fun OriginalTitle(
     )
 }
 
+/**
+ * A horizontal row to display multiple cards with even sizing and spacing.
+ * @param modifier the [Modifier] to be applied to the row
+ * ([androidx.compose.ui.Modifier.fillMaxSize] is applied over it).
+ * @param spacing The amount of horizontal spacing in [Dp] between cards.
+ * @param cards The list of composable functions ([Card]) to include in the row.
+ */
 @Composable
 private fun CardRow(
     modifier: Modifier,

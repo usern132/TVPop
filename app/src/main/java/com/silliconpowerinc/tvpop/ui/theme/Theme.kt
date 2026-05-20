@@ -245,6 +245,13 @@ data class ColorFamily(
     val onColorContainer: Color
 )
 
+/**
+ * The main theme of the application.
+ * Configures the [MaterialTheme] with the appropriate color scheme and typography.
+ *
+ * @param darkTheme Whether to use the dark color scheme. Defaults to the system setting.
+ * @param content The composable content to be displayed within the theme.
+ */
 @Composable
 fun AppTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),

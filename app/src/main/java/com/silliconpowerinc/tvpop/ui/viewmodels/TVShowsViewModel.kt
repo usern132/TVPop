@@ -13,15 +13,31 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import org.koin.core.annotation.KoinViewModel
 
+/**
+ * ViewModel for managing the TV show list and details.
+ * It handles the flow of TV show data in accordance with the device's language.
+ *
+ * @property tmdbRepository Repository for fetching TV shows from TMDB.
+ * @param languageObserver Observer for tracking device language changes.
+ */
 @KoinViewModel
 class TVShowsViewModel(
     private val tmdbRepository: TMDBRepository,
     languageObserver: LanguageObserver
 ) : ViewModel() {
+    /**
+     * Handles events from the TV show list UI.
+     *
+     * @param event The event to be processed.
+     */
     fun onEvent(event: TVShowListEvent) {}
 
     private val languageTagFlow = languageObserver.languageTagFlow
 
+    /**
+     * The flow of paginated TV show data, provided in the device's current language.
+     * Duplicate entries across pages are filtered out, and the data is cached in the [viewModelScope].
+     */
     @OptIn(ExperimentalCoroutinesApi::class)
     val tvShowsFlow = languageTagFlow.flatMapLatest { language ->
         tmdbRepository.getTVShowsFlow(language = language)
@@ -39,5 +55,11 @@ class TVShowsViewModel(
             }
     }.cachedIn(viewModelScope)
 
+    /**
+     * Retrieves a specific [TVShow] by its [id] from the repository if it exists.
+     *
+     * @param id The ID of the TV show.
+     * @return The [TVShow] if found, or null otherwise.
+     */
     fun getTVShow(id: Int): TVShow? = tmdbRepository.getTVShow(id)
 }

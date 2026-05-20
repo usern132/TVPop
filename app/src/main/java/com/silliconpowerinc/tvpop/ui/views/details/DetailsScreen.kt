@@ -15,6 +15,12 @@ import com.silliconpowerinc.tvpop.ui.viewmodels.TVShowsViewModel
 import com.silliconpowerinc.tvpop.ui.views.details.components.TVShowDetails
 import org.koin.compose.viewmodel.koinViewModel
 
+/**
+ * Screen that displays the details of a specific TV show.
+ *
+ * @param tvShowsViewModel The ViewModel used to retrieve the TV show data.
+ * @param tvShowId The unique identifier of the TV show to display.
+ */
 @Composable
 fun DetailsScreen(
     tvShowsViewModel: TVShowsViewModel = koinViewModel(),
@@ -25,6 +31,9 @@ fun DetailsScreen(
     else ErrorScreen()
 }
 
+/**
+ * Error screen displayed when the TV show details cannot be loaded.
+ */
 @Composable
 private fun ErrorScreen() {
     Box(

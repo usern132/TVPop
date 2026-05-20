@@ -30,6 +30,13 @@ import com.silliconpowerinc.tvpop.R
 import com.silliconpowerinc.tvpop.domain.models.TVShow
 import com.silliconpowerinc.tvpop.ui.theme.AppTypography
 
+/**
+ * A generic card used to display a specific detail with a title.
+ *
+ * @param modifier The modifier to be applied to the [Card].
+ * @param title The title of the detail.
+ * @param content The composable content of the detail.
+ */
 @Composable
 private fun DetailCard(
     modifier: Modifier = Modifier,
@@ -52,6 +59,13 @@ private fun DetailCard(
     }
 }
 
+/**
+ * A [DetailCard] that displays a title and a description string.
+ *
+ * @param modifier The modifier to be applied to the [Card].
+ * @param title The title of the detail.
+ * @param description The description text to display.
+ */
 @Composable
 fun TitleAndDescriptionDetailCard(
     modifier: Modifier = Modifier,
@@ -70,6 +84,12 @@ fun TitleAndDescriptionDetailCard(
     }
 }
 
+/**
+ * A [DetailCard] that displays the rating and vote count of a TV show.
+ *
+ * @param modifier The modifier to be applied to the [Card].
+ * @param tvShow The TV show whose rating is to be displayed.
+ */
 @Composable
 fun RatingDetailCard(
     modifier: Modifier,
@@ -82,7 +102,10 @@ fun RatingDetailCard(
         Column(
             modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(space = 8.dp, alignment = Alignment.CenterVertically)
+            verticalArrangement = Arrangement.spacedBy(
+                space = 8.dp,
+                alignment = Alignment.CenterVertically
+            )
         ) {
             RatingAndVoteCount(tvShow)
             RatingBar(tvShow)
@@ -90,6 +113,9 @@ fun RatingDetailCard(
     }
 }
 
+/**
+ * Displays a linear progress bar with a color palette representing the TV show's rating.
+ */
 @Composable
 private fun RatingBar(tvShow: TVShow) {
     LinearProgressIndicator(
@@ -114,6 +140,9 @@ private fun RatingBar(tvShow: TVShow) {
     )
 }
 
+/**
+ * Displays a star icon, the numerical rating and the number of votes.
+ */
 @Composable
 private fun RatingAndVoteCount(tvShow: TVShow) {
     Row(

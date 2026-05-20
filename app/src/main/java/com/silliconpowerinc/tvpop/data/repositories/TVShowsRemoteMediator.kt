@@ -14,6 +14,18 @@ import com.silliconpowerinc.tvpop.domain.models.TVShow
 private const val CACHE_TIMEOUT_MINUTES = 15
 private const val CACHE_TIMEOUT_MS = CACHE_TIMEOUT_MINUTES * 60 * 1000
 
+/** Starting value for TMDB API's pagination */
+private const val FIRST_PAGE = 1
+
+/**
+ * A [RemoteMediator] that handles fetching TV show data from the TMDB API and caching it in the local database.
+ * It invalidates the cache after a specified timeout ([CACHE_TIMEOUT_MS]) and offers offline access to cached data.
+ *
+ * @property tvShowsLocalSource The local data source (database) to store and retrieve TV shows.
+ * @property tmdbRemoteSource The remote data source to fetch TV shows from the TMDB API.
+ * @property connectivityObserver An observer to monitor the device's network connectivity status.
+ * @property language The language code used for fetching TV show information from the TMDB API.
+ */
 @OptIn(ExperimentalPagingApi::class)
 class TVShowsRemoteMediator(
     private val tvShowsLocalSource: TVShowsLocalSource,
@@ -47,7 +59,7 @@ class TVShowsRemoteMediator(
     ): MediatorResult {
         return try {
             val page = when (loadType) {
-                LoadType.REFRESH -> 1
+                LoadType.REFRESH -> FIRST_PAGE
                 LoadType.PREPEND -> return MediatorResult.Success(endOfPaginationReached = true)
                 LoadType.APPEND -> {
                     val remoteKeys = getRemoteKeyForLastItem(state)

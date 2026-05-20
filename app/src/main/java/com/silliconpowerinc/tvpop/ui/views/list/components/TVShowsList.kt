@@ -33,8 +33,15 @@ import com.silliconpowerinc.tvpop.ui.common.BORDER_PADDING_DP
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 
+/** Base class for events related to the TV show list. */
 sealed class TVShowListEvent
 
+/**
+ * Composable that displays a paginated list of TV shows with pull-to-refresh support.
+ *
+ * @param tvShowsFlow The flow of [PagingData] with the TV shows.
+ * @param onEvent Callback for events triggered from the list or its items.
+ */
 @Composable
 fun TVShowsList(
     tvShowsFlow: Flow<PagingData<TVShow>>,
@@ -74,6 +81,9 @@ fun TVShowsList(
 
 }
 
+/**
+ * Composable displayed while the list is loading.
+ */
 @Composable
 private fun LoadingScreen() {
     Box(
@@ -86,6 +96,9 @@ private fun LoadingScreen() {
     }
 }
 
+/**
+ * Composable displayed when an error occurs during loading.
+ */
 @Composable
 private fun ErrorScreen(
     state: LoadState.Error,

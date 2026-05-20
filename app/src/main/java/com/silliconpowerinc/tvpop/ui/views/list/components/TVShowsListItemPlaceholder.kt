@@ -10,6 +10,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
+/**
+ * A placeholder composable displayed when a [TVShowsListItem] is still loading from the paging source.
+ *
+ * @param modifier The modifier to be applied to the placeholder's layout.
+ */
 @Composable
 fun TVShowsListItemPlaceholder(
     modifier: Modifier = Modifier.fillMaxWidth()

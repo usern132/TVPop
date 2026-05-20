@@ -14,9 +14,18 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import org.koin.core.annotation.Singleton
 
+/**
+ * Implementation of the [TMDBRepository] interface.
+ * Coordinates data retrieval from the local database and the remote TMDB API,
+ * and handles caching and offline support.
+ *
+ * @property tvShowsLocalSource The local data source for TV shows.
+ * @property tmdbRemoteSource The remote data source for fetching TV shows from the TMDB API.
+ * @property connectivityObserver Observer for network connectivity status.
+ */
 @Singleton
 class TMDBRepositoryImpl(
-    private val database: TVShowsLocalSource,
+    private val tvShowsLocalSource: TVShowsLocalSource,
     private val tmdbRemoteSource: TMDBRemoteSource,
     private val connectivityObserver: ConnectivityObserver
 ) : TMDBRepository {
@@ -30,7 +39,7 @@ class TMDBRepositoryImpl(
      */
     @OptIn(ExperimentalPagingApi::class)
     override fun getTVShowsFlow(language: String): Flow<PagingData<TVShow>> {
-        val tvShowDao = database.tvShowDao()
+        val tvShowDao = tvShowsLocalSource.tvShowDao()
         return Pager(
             config = PagingConfig(
                 // Defined by TMDB's API
@@ -39,7 +48,7 @@ class TMDBRepositoryImpl(
                 enablePlaceholders = true
             ),
             remoteMediator = TVShowsRemoteMediator(
-                tvShowsLocalSource = database,
+                tvShowsLocalSource = tvShowsLocalSource,
                 tmdbRemoteSource = tmdbRemoteSource,
                 connectivityObserver = connectivityObserver,
                 language = language

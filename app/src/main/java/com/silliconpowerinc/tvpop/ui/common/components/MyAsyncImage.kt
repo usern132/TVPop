@@ -20,6 +20,27 @@ import coil3.compose.AsyncImagePainter.Companion.DefaultTransform
 import coil3.compose.SubcomposeAsyncImage
 import coil3.compose.SubcomposeAsyncImageScope
 
+/**
+ * A customized version of Coil's [SubcomposeAsyncImage] with defaults for the loading and error [Composable]s.
+ * All parameters match with Coil's own parameters (and their default values) and are passed down to it.
+ *
+ * @param model The data to load (e.g., URL, URI).
+ * @param contentDescription The description of the image for accessibility.
+ * @param modifier The modifier to be applied to the layout.
+ * @param transform A function to transform the painter state.
+ * @param loading Composable for the loading state. Defaults to [CustomLoading].
+ * @param success Composable for the success state.
+ * @param error Composable for the error state. Defaults to [CustomError].
+ * @param onLoading Callback when the image starts loading.
+ * @param onSuccess Callback when the image loads successfully.
+ * @param onError Callback when the image fails to load.
+ * @param alignment Alignment for the image within its bounds.
+ * @param contentScale Content scale for the image.
+ * @param alpha Opacity to be applied to the image.
+ * @param colorFilter Color filter to be applied to the image.
+ * @param filterQuality Filter quality for the image.
+ * @param clipToBounds Whether to clip the image to its bounds.
+ */
 @Composable
 fun MyAsyncImage(
     model: Any?,
@@ -59,6 +80,9 @@ fun MyAsyncImage(
     )
 }
 
+/**
+ * Default loading composable for [MyAsyncImage].
+ */
 @Composable
 private fun CustomLoading() {
     Box(
@@ -71,6 +95,9 @@ private fun CustomLoading() {
     }
 }
 
+/**
+ * Default error composable for [MyAsyncImage].
+ */
 @Composable
 private fun CustomError() {
     Box(

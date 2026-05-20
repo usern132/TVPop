@@ -10,6 +10,23 @@ import java.util.Date
 private const val IMAGE_WIDTH = "w1280"
 private const val IMAGES_BASE_URL = "https://image.tmdb.org/t/p/$IMAGE_WIDTH"
 
+/**
+ * Domain model representing a TV show, also used as a Room entity and for JSON serialization.
+ *
+ * @property id Unique identifier for the TV show.
+ * @property name Name of the TV show.
+ * @property relativeBackdropPath Relative path to the backdrop image on TMDB's servers.
+ * @property firstAirDate Date when the show first aired, as a string in "yyyy-MM-dd" format.
+ * @property genreIds List of genre IDs associated with the show.
+ * @property originCountry List of ISO 3166-1 A-2 country codes where the show is from.
+ * @property originalLanguage ISO 639-1:2002 language code of the show's original language.
+ * @property originalName Original name of the TV show (untranslated).
+ * @property overview A brief description of the show.
+ * @property popularity Popularity score assigned by TMDB.
+ * @property posterPath Relative path to the poster image on TMDB servers.
+ * @property voteAverage Average user rating for the show.
+ * @property voteCount Total number of user votes for the show.
+ */
 @Entity
 @Serializable
 data class TVShow(
@@ -37,9 +54,11 @@ data class TVShow(
     @SerialName("vote_count")
     val voteCount: Int
 ) {
+    /** Full URL for [relativeBackdropPath]. */
     val backdropUrl: String
         get() = "$IMAGES_BASE_URL$relativeBackdropPath"
 
+    /** The [firstAirDate] parsed into a [Date] object. */
     val firstAirDateObject: Date
         get() {
             val formatFromAPI = SimpleDateFormat("yyyy-MM-dd")
@@ -48,6 +67,7 @@ data class TVShow(
         }
 
     companion object {
+        /** Example [TVShow] instances useful for previews and testing. */
         val examples: List<TVShow> = listOf(
             TVShow(
                 id = 1,
