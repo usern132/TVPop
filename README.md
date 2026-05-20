@@ -29,9 +29,9 @@ un LLM.
 Se ha usado el servicio [Groq](https://groq.com/) para procesar las solicitudes con el
 modelo [Llama 3.1 8B Instant](https://console.groq.com/docs/model/llama-3.1-8b-instant). Se ha
 escogido este modelo por tener el límite más generoso de peticiones gratuitas y por su velocidad
-ante una tasca tan sencilla y no crítica.
+ante una tarea tan sencilla y no crítica.
 
-Ante las restricciones de tiempo y mi nula experiencia en el entorno de ML/AI en Android, he optado
+Ante las restricciones de tiempo y mi poca experiencia en el entorno de ML/AI en Android, he optado
 por esta solución sencilla para añadir valor a la aplicación. Gracias a la separación por capas, se
 puede modificar la capa de datos fácilmente para cambiar de proveedor de IA o incluso ejecutar un
 modelo en local en un futuro sin afectar al resto del proyecto
@@ -67,7 +67,7 @@ Antes de compilar el proyecto, es necesario especificar tu clave de la API de TM
 Groq para poder autenticar las peticiones. Rellena su valor en el fichero `local.properties`
 (generado por Android Studio en la raíz del proyecto) a partir de la plantilla proporcionada, [
 `local.properties.template`](local.properties.template). Copia el contenido de la plantilla al final
-de `local.properties` y rellena el valor de la clave.
+de `local.properties` y rellena el valor de las claves.
 
 ## Aspectos técnicos
 
@@ -86,8 +86,7 @@ sido una buena oportunidad para entrar en contacto con Koin.
 ### Almacenaje local
 
 Se ha usado la librería **[Room](https://developer.android.com/training/data-storage/room/)** para
-mantener una
-cópia local de las series obtenidas de TMDB a modo de caché.
+mantener una copia local de las series obtenidas de TMDB a modo de caché.
 
 ### Paginación
 
@@ -108,7 +107,7 @@ descompresión de la respuesta recibida por la API
 > REQUEST https://api.themoviedb.org/3/tv/popular?language=en-US&page=1 failed with exception:
 > io.ktor.utils.io.ClosedByteChannelException: gzip finished without exhausting source
 
-Aun especificando el idioma "en-US" como opción por defecto cuando el idioma del sistema no
+Aun especificando el idioma "en-US" como parámetro por defecto cuando el idioma del sistema no
 es uno de los tres idiomas soportados en la aplicación, el problema sigue ocurriendo hasta volver a
 establecer un idioma soportado.
 
