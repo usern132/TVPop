@@ -2,11 +2,13 @@ package com.silliconpowerinc.tvpop.di
 
 import android.content.Context
 import androidx.room.Room
+import com.silliconpowerinc.tvpop.common.Secrets
 import com.silliconpowerinc.tvpop.data.sources.TVShowsLocalSource
 import com.silliconpowerinc.tvpop.data.utils.ConnectivityObserver
 import com.silliconpowerinc.tvpop.data.utils.ConnectivityObserverImpl
 import com.silliconpowerinc.tvpop.data.utils.LanguageObserver
 import com.silliconpowerinc.tvpop.data.utils.LanguageObserverImpl
+import io.github.vyfor.groqkt.GroqClient
 import org.koin.core.annotation.ComponentScan
 import org.koin.core.annotation.Configuration
 import org.koin.core.annotation.Module
@@ -32,4 +34,7 @@ class AppModule {
     @Single
     fun provideLanguageObserver(context: Context): LanguageObserver =
         LanguageObserverImpl(context)
+
+    @Single
+    fun provideGroqClient(): GroqClient = GroqClient(apiKey = Secrets.GROQ_API_KEY)
 }
